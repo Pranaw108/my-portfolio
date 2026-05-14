@@ -15,6 +15,7 @@ export default function App() {
       <Projects />
       <Experience />
       <Contact />
+      <Contact />
  
     </div>
   );
