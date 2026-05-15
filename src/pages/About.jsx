@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
-import { Code, Database, Server, BookOpen, GraduationCap, MapPin, Calendar, Computer, Terminal } from "lucide-react";
+// 👉 FIX: Added 'Award' to the imports below
+import { Code, Database, Server, BookOpen, GraduationCap, Calendar, Terminal, Award } from "lucide-react";
 import Footer from "../components/Footer";
 import useDisableInspect from "../hooks/useDisableInspect";
 
@@ -101,7 +102,6 @@ export default function About() {
 
       </div>
       <Footer />
-      <style>{`.animate-fade-in { animation: fadeIn 0.4s ease-in-out; } @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }`}</style>
     </div>
   );
 }
