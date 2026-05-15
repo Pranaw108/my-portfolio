@@ -34,7 +34,7 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors">
-      {/* Hero Section */}
+
       {/* Hero Section */}
       <section className="relative bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900 text-white py-20 overflow-hidden">
         <div className="absolute inset-0 bg-[url('/grid.svg')] opacity-20"></div>
@@ -52,7 +52,6 @@ export default function Home() {
               className="relative w-full h-full object-cover rounded-full border-4 border-white/20 shadow-2xl group-hover:scale-105 transition-transform duration-500"
             />
           </div>
-          {/* --------------------------------- */}
 
           <h1 className="text-5xl md:text-7xl font-extrabold mb-4 tracking-tight">
             Pranaw <span className="text-blue-400">Gautam</span>

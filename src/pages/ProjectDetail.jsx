@@ -9,7 +9,7 @@ import Footer from "../components/Footer";
 import useDisableInspect from "../hooks/useDisableInspect";
 
 /* ================= PROJECT DATA ================= */
-// Note: Kept your existing data structure intact.
+
 const projectsData = {
 
   1: {
@@ -22,7 +22,7 @@ const projectsData = {
     technologies: ["Django", "Python", "DRF", "Scikit-Learn", "Pandas", "K-Means"],
     category: "data",
     status: "completed",
-    // ... keep your existing URLs and icons
+
     features: [
       "Django REST API backend",
       "K-Means Customer Clustering",
@@ -43,7 +43,7 @@ const projectsData = {
     technologies: ["Django", "Python", "NLP", "Pandas", "Matplotlib"],
     category: "ai",
     status: "completed",
-    // ... keep your existing URLs and icons
+ 
     features: [
       "Scalable Django Web App",
       "NLP text preprocessing",

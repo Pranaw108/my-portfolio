@@ -18,7 +18,7 @@ export default function Contact() {
     e.preventDefault();
     setStatus({ submitting: true, type: null });
     try {
-      // Replace with your Formspree/EmailJS ID
+  
       const res = await fetch("https://formspree.io/f/YOUR_FORM_ID", {
         method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(formData),
       });
