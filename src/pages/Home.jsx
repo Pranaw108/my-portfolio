@@ -47,7 +47,7 @@ export default function Home() {
             
             {/* Profile Image */}
             <img
-              src="/profile.png" 
+              src="/profile.jpeg" 
               alt="Pranaw Gautam"
               className="relative w-full h-full object-cover rounded-full border-4 border-white/20 shadow-2xl group-hover:scale-105 transition-transform duration-500"
             />
