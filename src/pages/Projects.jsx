@@ -71,7 +71,25 @@ export default function Projects() {
     },
 
     {
-      id: 4,
+    id: 4,
+    title: "Air Quality Analysis",
+    description: "Data analytics and visualization project.",
+    fullDescription: "Air Quality Analysis project focuses on analyzing air pollution data using Python libraries. The project involves cleaning datasets, visualizing trends, and deriving insights to understand air quality patterns.",
+    image: "/project-img/data-dashboard.png",
+    placeholderImage: "https://placehold.co/800x400/EF4444/FFFFFF?text=Air+Quality+Analysis",
+    technologies: ["Python", "NumPy", "Pandas", "Matplotlib"],
+    category: "data",
+    status: "in-progress",
+    githubUrl: null,
+    liveUrl: null,
+    year: "2025",
+    team: "Solo",
+    icon: Database,
+    fallbackColor: "from-emerald-400 to-teal-600"
+  },
+
+    {
+      id: 5,
       title: "Travel & Tourism UI",
       description: "Modern Travel and tourism UI design.",
       image: "/bhakti1.png",
@@ -86,12 +104,12 @@ export default function Projects() {
       fallbackColor: "from-yellow-400 to-orange-500",
     },
     {
-      id: 5,
+      id: 6,
       title: "LMS-Student Module",
       description: "Interactive data visualization dashboard.",
       image: "/lmsfrontend.png",
       technologies: ["Python", "Tailwind CSS", "Django"],
-      category: "data",
+      category: "web",
       status: "in-progress",
       githubUrl: "https://github.com/15shivamgit/LMS-Student--Module-Backend-",
       linkUrl: "https://lms-student-module-frontend.vercel.app/",
