@@ -109,27 +109,6 @@ const projectsData = {
     learnings: ["Deploying ML models via APIs", "Natural Language Processing (NLP) techniques", "Django routing and serializers"],
   },
 
-  3: {
-    id: 3,
-    title: "Space Missions Analysis Dashboard",
-    description: "Space Missions analytics dashboard using Power BI.",
-    fullDescription: "This project is a Power BI dashboard designed to analyze Space Missions data. It helps track KPIs such as Batter, Bowler and indivisual team performance. The dashboard includes interactive charts and filters to explore Space Missions performance across coutry, Launce-site, Operator.",
-    image: "/ipl_dash2.png",
-    placeholderImage: "https://placehold.co/800x400/10B981/FFFFFF?text=Space+Dashboard",
-    technologies: ["Power BI", "DAX", "Data Analysis", "Excel", "Jupyter"],
-    category: "data",
-    status: "completed",
-    githubUrl: "https://github.com/15shivamgit/Data-Analysis.git",
-    liveUrl: "https://app.powerbi.com/view?r=eyJrIjoiNjU0NTg5YTMtNzRmNi00N2NhLWI2OTktN2VjZWM3YTQyMzFmIiwidCI6IjdkYTQ0YzBhLWM1ZDMtNDY5My05M2YzLWI3MDg5ZDcyNzY3NCJ9",
-    year: "2026",
-    team: "Solo",
-    duration: "2 weeks",
-    features: ["KPIs tracking", "performance analysis", "category insights", "Interactive charts and filters"],
-    challenges: ["Data cleaning and transformation", "Building efficient data models", "Creating meaningful visual insights"],
-    learnings: ["Space Missions data analysis", "Dashboard storytelling", "Advanced Power BI visualization"],
-    icon: Database,
-  },
-
   4: {
     id: 4,
     title: "Air Quality Analysis",

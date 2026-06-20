@@ -79,22 +79,6 @@ export default function Projects() {
     },
 
     {
-      id: 3,
-      title: "Space Missions Performance Dashboard",
-      description: "Space Missions analytics dashboard using Power BI.",
-      image: "/ipl_dash2.png",
-      technologies: ["Power BI", "Python", "NumPy", "Pandas", "Matplotlib", "DAX"],
-      category: "data",
-      status: "completed",
-      githubUrl: null,
-      linkUrl: "https://app.powerbi.com/view?r=eyJrIjoiNjU0NTg5YTMtNzRmNi00N2NhLWI2OTktN2VjZWM3YTQyMzFmIiwidCI6IjdkYTQ0YzBhLWM1ZDMtNDY5My05M2YzLWI3MDg5ZDcyNzY3NCJ9",
-      year: "2026",
-      team: "Solo",
-      icon: Database,
-      fallbackColor: "from-emerald-400 to-teal-600",
-    },
-
-    {
       id: 4,
       title: "Air Quality Analysis",
       description: "Data analytics and visualization project.",
