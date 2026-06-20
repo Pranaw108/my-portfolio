@@ -1,8 +1,9 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
-  Calendar,Users,Code2,Database,Brain,
-  MessageCircle,Search,Link2Icon,Layers } from "lucide-react";
+  Calendar, Users, Code2, Database, Brain,
+  MessageCircle, Search, Link2Icon, Layers
+} from "lucide-react";
 import Footer from "../components/Footer";
 import useDisableInspect from "../hooks/useDisableInspect";
 import { NavLink } from "react-router-dom";
@@ -19,6 +20,29 @@ export default function Projects() {
   }, []);
 
   const projects = [
+
+    {
+      id: 0,
+      title: "Space Launch Analytics",
+      description: "End-to-end data analytics project for global space launch operations and mission performance analysis.",
+      image: "/Launch Sites.png",
+      technologies: [
+        "Python",
+        "Pandas",
+        "NumPy",
+        "MySQL",
+        "SQL",
+        "Power BI"
+      ],
+      category: "data",
+      status: "completed",
+      githubUrl: "https://github.com/Pranaw108/Space_Launch_Analysis.git",
+      linkUrl: null,
+      year: "2026",
+      team: "Solo Project",
+      icon: Database,
+      fallbackColor: "from-indigo-500 to-blue-600",
+    },
     
     {
       id: 1,
@@ -71,22 +95,22 @@ export default function Projects() {
     },
 
     {
-    id: 4,
-    title: "Air Quality Analysis",
-    description: "Data analytics and visualization project.",
-    fullDescription: "Air Quality Analysis project focuses on analyzing air pollution data using Python libraries. The project involves cleaning datasets, visualizing trends, and deriving insights to understand air quality patterns.",
-    image: "/project-img/data-dashboard.png",
-    placeholderImage: "https://placehold.co/800x400/EF4444/FFFFFF?text=Air+Quality+Analysis",
-    technologies: ["Python", "NumPy", "Pandas", "Matplotlib"],
-    category: "data",
-    status: "in-progress",
-    githubUrl: null,
-    liveUrl: null,
-    year: "2025",
-    team: "Solo",
-    icon: Database,
-    fallbackColor: "from-emerald-400 to-teal-600"
-  },
+      id: 4,
+      title: "Air Quality Analysis",
+      description: "Data analytics and visualization project.",
+      fullDescription: "Air Quality Analysis project focuses on analyzing air pollution data using Python libraries. The project involves cleaning datasets, visualizing trends, and deriving insights to understand air quality patterns.",
+      image: "/project-img/data-dashboard.png",
+      placeholderImage: "https://placehold.co/800x400/EF4444/FFFFFF?text=Air+Quality+Analysis",
+      technologies: ["Python", "NumPy", "Pandas", "Matplotlib"],
+      category: "data",
+      status: "in-progress",
+      githubUrl: null,
+      liveUrl: null,
+      year: "2025",
+      team: "Solo",
+      icon: Database,
+      fallbackColor: "from-emerald-400 to-teal-600"
+    },
 
     {
       id: 5,
@@ -118,7 +142,7 @@ export default function Projects() {
       icon: Database,
       fallbackColor: "from-indigo-500 to-purple-500",
     },
-    
+
   ];
 
   const categories = [
@@ -158,9 +182,9 @@ export default function Projects() {
     <>
       <div className="min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors duration-300 py-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          
+
           {/* Header Section */}
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             className="text-center mb-16"
@@ -176,18 +200,17 @@ export default function Projects() {
           {/* Filters and Search */}
           <div className="mb-10 space-y-6">
             <div className="flex flex-col lg:flex-row gap-6 justify-between items-center">
-              
+
               {/* Category Filters */}
               <div className="flex flex-wrap justify-center gap-3">
                 {categories.map((c) => (
                   <button
                     key={c.id}
                     onClick={() => setFilter(c.id)}
-                    className={`flex items-center gap-2 px-5 py-2.5 rounded-xl font-medium transition-all duration-300 ${
-                      filter === c.id
+                    className={`flex items-center gap-2 px-5 py-2.5 rounded-xl font-medium transition-all duration-300 ${filter === c.id
                         ? "bg-blue-600 text-white shadow-md shadow-blue-500/30 scale-105"
                         : "bg-white dark:bg-gray-800 text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 hover:scale-105 border border-gray-200 dark:border-gray-700"
-                    }`}
+                      }`}
                   >
                     <c.icon className="w-4 h-4" />
                     {c.label}
@@ -323,7 +346,7 @@ export default function Projects() {
 
           {/* Empty State */}
           {filteredProjects.length === 0 && (
-            <motion.div 
+            <motion.div
               initial={{ opacity: 0 }} animate={{ opacity: 1 }}
               className="text-center py-16"
             >
@@ -333,7 +356,7 @@ export default function Projects() {
                 <p className="text-gray-500 dark:text-gray-400">
                   Try adjusting your search or filter criteria to find what you&apos;re looking for.
                 </p>
-                <button onClick={() => {setFilter('all'); setSearchTerm('');}} className="mt-6 text-blue-600 hover:text-blue-700 font-medium">
+                <button onClick={() => { setFilter('all'); setSearchTerm(''); }} className="mt-6 text-blue-600 hover:text-blue-700 font-medium">
                   Clear all filters
                 </button>
               </div>
@@ -341,7 +364,7 @@ export default function Projects() {
           )}
 
           {/* Call to Action */}
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}

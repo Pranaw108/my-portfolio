@@ -12,6 +12,61 @@ import useDisableInspect from "../hooks/useDisableInspect";
 
 const projectsData = {
 
+  0: {
+    id: 0,
+    title: "Space Launch Analytics",
+    description: "Data analytics and business intelligence project.",
+    fullDescription:
+      "Space Launch Analytics is an end-to-end Data Analytics project designed to analyze global space launch operations, rocket performance, mission success rates, launch costs, payload efficiency, and orbital deployment trends. The project combines Python, SQL, MySQL, Pandas, NumPy, and Power BI to transform raw launch datasets into actionable business insights for strategic decision-making.",
+    image: "/Overview.png",
+    placeholderImage:
+      "https://placehold.co/800x400/2563EB/FFFFFF?text=Space+Launch+Analytics",
+    technologies: [
+      "Python",
+      "Pandas",
+      "NumPy",
+      "MySQL",
+      "SQL",
+      "SQLAlchemy",
+      "Power BI"
+    ],
+    category: "data",
+    status: "completed",
+    githubUrl: "https://github.com/Pranaw108/Space_Launch_Analysis.git",
+    liveUrl: null,
+    year: "2026",
+    team: "Solo Project",
+    duration: "2 Months",
+    features: [
+      "Launch Success Rate Analysis",
+      "Rocket Performance Evaluation",
+      "Payload Efficiency Metrics",
+      "Cost Per Kilogram Analysis",
+      "Mission Reliability Ranking",
+      "Trend Analysis Dashboard",
+      "ISRO Mission Analytics",
+      "Power BI Executive Dashboard"
+    ],
+    challenges: [
+      "Cleaning and validating large launch datasets",
+      "Feature engineering for business KPIs",
+      "Building analytical data warehouse",
+      "Designing meaningful business dashboards",
+      "Handling mission outcome classification"
+    ],
+    learnings: [
+      "Advanced Data Analysis using Pandas",
+      "Business KPI Development",
+      "SQL Analytics and Query Optimization",
+      "Data Warehousing Concepts",
+      "Power BI Dashboard Design",
+      "ETL Pipeline Development",
+      "Data Quality Assessment",
+      "Business Intelligence Reporting"
+    ],
+    icon: Database,
+  },
+
   1: {
     id: 1,
     title: "E-commerce Sales & Segmentation Platform",
@@ -43,7 +98,7 @@ const projectsData = {
     technologies: ["Django", "Python", "NLP", "Pandas", "Matplotlib"],
     category: "ai",
     status: "completed",
- 
+
     features: [
       "Scalable Django Web App",
       "NLP text preprocessing",
@@ -136,7 +191,7 @@ const projectsData = {
     learnings: ["Team collaboration", "Frontend-backend integration"],
     icon: Database,
   },
-  
+
 };
 
 /* ================= COMPONENT ================= */
@@ -177,7 +232,7 @@ export default function ProjectDetail() {
     <>
       <div className="min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors duration-300 py-12">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          
+
           {/* Back Button */}
           <NavLink
             to="/projects"
@@ -187,7 +242,7 @@ export default function ProjectDetail() {
             Back to Projects
           </NavLink>
 
-          <motion.div 
+          <motion.div
             initial="hidden"
             animate="visible"
             variants={{ visible: { transition: { staggerChildren: 0.1 } } }}
@@ -222,9 +277,8 @@ export default function ProjectDetail() {
 
               {/* Status Badge */}
               <div className="absolute top-6 left-6">
-                <span className={`px-4 py-1.5 rounded-full text-sm font-bold uppercase tracking-wider backdrop-blur-md border ${
-                    project.status === "completed" ? "bg-emerald-500/20 text-emerald-300 border-emerald-500/30"
-                      : project.status === "in-progress" ? "bg-amber-500/20 text-amber-300 border-amber-500/30"
+                <span className={`px-4 py-1.5 rounded-full text-sm font-bold uppercase tracking-wider backdrop-blur-md border ${project.status === "completed" ? "bg-emerald-500/20 text-emerald-300 border-emerald-500/30"
+                    : project.status === "in-progress" ? "bg-amber-500/20 text-amber-300 border-amber-500/30"
                       : "bg-blue-500/20 text-blue-300 border-blue-500/30"
                   }`}
                 >
@@ -234,7 +288,7 @@ export default function ProjectDetail() {
             </motion.div>
 
             <div className="p-8 md:p-10">
-              
+
               {/* Project Meta Grid */}
               <motion.div variants={fadeIn} className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-10">
                 {[
@@ -323,7 +377,7 @@ export default function ProjectDetail() {
                     ))}
                   </ul>
                 </div>
-                
+
                 <div className="bg-emerald-50 dark:bg-emerald-900/10 border border-emerald-100 dark:border-emerald-900/30 rounded-2xl p-6 md:p-8">
                   <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-4 flex items-center gap-2">
                     <Code2 className="w-5 h-5 text-emerald-500" /> Key Learnings
