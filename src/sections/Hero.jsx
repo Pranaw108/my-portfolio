@@ -53,6 +53,8 @@ export default function Hero() {
                     transition={{ duration: 1, ease: EASE, delay: 0.12 + i * 0.09 }}
                   >
                     {word}
+                    {/* keeps "Pranaw Gautam" two words for screen readers and copy-paste */}
+                    {i === 0 && " "}
                   </m.span>
                 </span>
               ))}
