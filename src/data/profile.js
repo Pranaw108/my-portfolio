@@ -1,18 +1,19 @@
 export const profile = {
   name: "Pranaw Gautam",
-  roles: ["Data Analyst", "AI/ML Engineer", "Web & Flutter Developer"],
+  roles: ["AI/ML Engineer", "Data Scientist"],
+  currentRole: "AI/ML Engineer",
   currentCompany: "Vibe6 Digital",
   intro:
-    "I build data pipelines, machine-learning models and dashboards in Python and SQL — and the web and Flutter apps that put them in front of people.",
-  location: "Satna, Madhya Pradesh, India",
-  locationShort: "Satna, India",
+    "I build recommendation systems and data pipelines in Python and SQL, prove them on held-out data, and ship them through FastAPI services and Flutter apps.",
+  location: "Indore, Madhya Pradesh, India",
+  locationShort: "Indore, India",
   email: "pranawgautam@gmail.com",
   phone: "+91 81092 60602",
   phoneHref: "tel:+918109260602",
   resume: "/files/Pranaw-Gautam-Resume.pdf",
   links: {
     github: "https://github.com/Pranaw108",
-    linkedin: "https://www.linkedin.com/in/pranaw-gautam9",
+    linkedin: "https://www.linkedin.com/in/pranaw-gautam/",
   },
   photo: {
     src: "/images/profile-960.webp",
@@ -22,7 +23,7 @@ export const profile = {
 
 export const about = [
   "Most of what I build starts with messy data — cleaning it, modeling it and turning it into something a person can act on: a dashboard, a REST API, or a ranked row on a phone screen.",
-  "I'm currently at Vibe6 Digital. Before that I spent six months as a Data Science Intern at Shanti Infosoft, building preprocessing pipelines, running exploratory analysis and hardening the Python code the team relied on.",
+  "I'm an AI/ML Engineer at Vibe6 Digital in Indore, working on the recommendation system for a client's audio-storytelling app. Before that I spent six months as a Data Science Intern at Shanti Infosoft, building preprocessing pipelines, running exploratory analysis and hardening the Python code the team relied on.",
   "I care about honest evaluation — baselines, held-out test data and significance tests before calling something better — and about code that is tested, documented and easy to hand over.",
 ];
 

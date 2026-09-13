@@ -15,7 +15,7 @@ const fadeUp = (delay) => ({
 
 const previous = experience.find((job) => !job.current);
 const facts = [
-  { label: "Now", value: profile.currentCompany },
+  { label: "Now", value: `${profile.currentRole}, ${profile.currentCompany}` },
   { label: "Previously", value: `${previous.role}, ${previous.company.replace(" LLP", "")}` },
   { label: "Education", value: `MCA · ${education[0].detail}` },
   { label: "Based in", value: profile.locationShort },
@@ -64,8 +64,10 @@ export default function Hero() {
               {...fadeUp(0.4)}
               className="mt-6 max-w-2xl text-[clamp(1.2rem,2.3vw,1.65rem)] leading-snug tracking-[-0.015em] text-ink-soft text-balance"
             >
-              Data Analyst, AI/ML Engineer <span className="font-serif text-[1.12em] text-accent italic">and</span>{" "}
-              Web&nbsp;&amp;&nbsp;Flutter Developer
+              AI/ML Engineer <span className="font-serif text-[1.12em] text-accent italic">and</span> Data Scientist
+              <span className="mt-1 block text-[0.72em] tracking-normal text-muted">
+                Recommender systems · Python · FastAPI · Flutter
+              </span>
             </m.p>
 
             <m.p {...fadeUp(0.5)} className="mt-5 max-w-xl text-[1.05rem] leading-relaxed text-muted text-pretty">

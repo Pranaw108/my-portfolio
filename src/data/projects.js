@@ -11,7 +11,7 @@ export const projects = [
       "A recommendation system for an audio-storytelling platform, and the Flutter home screen that runs it entirely on the phone.",
     problem:
       "Listening data was extremely sparse — the median listener had played a single title — so the usual recommenders had very little signal to learn from. The goal was a home screen that feels personal from the first session, without sending anything about the listener to a server.",
-    role: "Solo — data pipeline, modeling, evaluation and the Flutter app",
+    role: "AI/ML Engineer at Vibe6 Digital — data pipeline, modeling, evaluation and the Flutter prototype",
     stack: ["Python", "pandas", "scikit-learn", "pytest", "Flutter", "Dart", "Firebase Storage"],
     source: null,
     sourceLabel: "Private repo",
@@ -24,8 +24,8 @@ export const projects = [
     highlight: { value: "87.4%", label: "of test users were shown a title they went on to play — vs 82.6% for a single list (p = 0.0018)" },
     results: [
       { value: "87.4% vs 82.6%", label: "Shelf home screen vs a single list of the same length, share of test users shown something they went on to play (McNemar p = 0.0018)" },
-      { value: "45% → 55%", label: "Hit rate of “Recommended for you” after replacing a hand-set ranking with a learned model" },
-      { value: "8", label: "Approaches benchmarked on a time-based train / validation / test split, from random to hybrid" },
+      { value: "77.9% → 80.1%", label: "Top-10 hit rate after replacing the hand-tuned blend with a learned logistic-regression ranker (562 held-out users, p = 0.02)" },
+      { value: "99% → 0", label: "Share of age-unconfirmed users being recommended an 18+ title, before and after enforcing age gating" },
     ],
     approach: [
       {
@@ -73,7 +73,7 @@ export const projects = [
     kind: "Data analytics · Business intelligence",
     year: "2026",
     summary:
-      "An end-to-end analytics pipeline and Power BI report on global space launches since 1957 — reliability, cost and payload efficiency in one place.",
+      "An end-to-end analytics pipeline and Power BI report on 7,500 space launches since 1957 — reliability, cost and payload efficiency in one place.",
     problem:
       "Satellite operators choosing a launch provider weigh high costs, mission risk and payload trade-offs. The questions are simple — which rockets are reliable, who delivers payload efficiently, does paying more buy success? — but the raw launch data is too inconsistent to answer them directly.",
     role: "Solo — data engineering, analysis and dashboard design",
@@ -123,8 +123,8 @@ export const projects = [
       "A Python ETL and SQL analytics pipeline that turns inconsistent Indian air-quality records into clean, query-ready data on PM2.5, NO₂ and four other pollutants.",
     problem:
       "Public air-quality data arrives as separate city, station and national files with inconsistent columns, unsorted timestamps and large gaps — PM10 is missing from over a third of city and station readings. Before anyone can ask where and when pollution peaks, the data has to be made trustworthy.",
-    role: "Led the pipeline and analysis end to end",
-    stack: ["Python", "Pandas", "NumPy", "SQLAlchemy", "SQL", "Parquet", "Matplotlib", "Seaborn"],
+    role: "Solo — pipeline, analysis and the AQI forecasting now in progress",
+    stack: ["Python", "Pandas", "NumPy", "SQLAlchemy", "SQL", "Parquet"],
     source: null,
     sourceLabel: "Source on request",
     sourceNote: "Source isn't public yet — available on request.",
@@ -140,7 +140,8 @@ export const projects = [
       { title: "Clean", body: "Dropped duplicates and fully empty columns; filled gaps with forward-fill and a median fallback, and labeled missing categories explicitly." },
       { title: "Measure quality", body: "Generated a data-quality summary for each source — missing percentage and negative-value count per pollutant." },
       { title: "Load", body: "Wrote Parquet outputs and loaded tables through SQLAlchemy — SQLite locally, MySQL or Postgres through configuration." },
-      { title: "Analyze", body: "SQL reports for the most polluted cities by PM2.5, the AQI category distribution and seasonal PM2.5 trends, plus correlation analysis in Matplotlib and Seaborn." },
+      { title: "Analyze", body: "SQL reports for the most polluted cities by PM2.5, the AQI category distribution and seasonal PM2.5 trends." },
+      { title: "Forecast (in progress)", body: "Extending the pipeline to predict AQI 24–48 hours ahead per monitoring station, as an early warning for unhealthy air." },
     ],
     features: [
       "Multi-source ingestion: city, station and national data",

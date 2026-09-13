@@ -32,7 +32,10 @@ export default function Experience() {
 
               <div>
                 <h3 className="text-[1.35rem] font-semibold tracking-[-0.02em]">{job.company}</h3>
-                <p className="mt-0.5 text-ink-soft">{job.role}</p>
+                <p className="mt-0.5 text-ink-soft">
+                  {job.role}
+                  {job.location && <span className="text-muted"> · {job.location}</span>}
+                </p>
                 {job.summary && <p className="mt-4 leading-relaxed text-muted">{job.summary}</p>}
 
                 {job.points.length > 0 && (
