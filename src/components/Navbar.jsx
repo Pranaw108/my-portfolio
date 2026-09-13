@@ -1,94 +1,165 @@
-import { useState, useEffect } from "react";
-import { NavLink, useLocation } from "react-router-dom";
-import { Menu, X, Terminal } from "lucide-react";
-import useDisableInspect from "../hooks/useDisableInspect";
+import { useEffect, useState } from "react";
+import { Link, useLocation } from "react-router-dom";
+import { AnimatePresence, m } from "framer-motion";
+import { ArrowUpRight, FileText, Mail } from "lucide-react";
+import { navItems, profile } from "../data/profile";
+import useActiveSection from "../hooks/useActiveSection";
+import { EASE } from "../lib/motion";
+import ThemeToggle from "./ThemeToggle";
+import ButtonLink from "./Button";
+import { GitHubIcon, LinkedInIcon } from "./BrandIcons";
+
+const SECTION_IDS = navItems.map((item) => item.id);
 
 export default function Navbar() {
-  useDisableInspect();
-  const [isOpen, setIsOpen] = useState(false);
-  const location = useLocation();
+  const { pathname } = useLocation();
+  const active = useActiveSection(SECTION_IDS, pathname === "/");
+  const [open, setOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(() => window.scrollY > 8);
+  const close = () => setOpen(false);
 
-  // Close mobile menu when route changes
   useEffect(() => {
-    setIsOpen(false);
-  }, [location.pathname]);
+    const onScroll = () => setScrolled(window.scrollY > 8);
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
 
-  const navItems = [
-    { name: "Home", to: "/" },
-    { name: "About", to: "/about" },
-    { name: "Projects", to: "/projects" },
-    { name: "Certificates", to: "/certificates" },
-    { name: "Achievements", to: "/achievements" },
-    { name: "Contact", to: "/contact" },
-  ];
+  // While the mobile menu is open: lock page scroll and close on Escape.
+  useEffect(() => {
+    if (!open) return;
+    const onKey = (e) => e.key === "Escape" && setOpen(false);
+    document.documentElement.style.overflow = "hidden";
+    window.addEventListener("keydown", onKey);
+    return () => {
+      document.documentElement.style.overflow = "";
+      window.removeEventListener("keydown", onKey);
+    };
+  }, [open]);
+
+  const solid = scrolled || open;
 
   return (
-    <nav className="sticky top-0 z-50 bg-white/80 dark:bg-gray-900/80 backdrop-blur-md border-b border-gray-200 dark:border-gray-800 transition-colors duration-300">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between h-16">
-          {/* Logo */}
-          <div className="flex items-center">
-            <NavLink to="/" className="flex-shrink-0 flex items-center gap-2 group">
-              <Terminal className="w-6 h-6 text-blue-600 dark:text-blue-400 group-hover:text-blue-500 transition-colors" />
-              <h1 className="text-xl font-extrabold text-gray-900 dark:text-white tracking-tight">
-                Pranaw<span className="text-blue-600 dark:text-blue-400">Gautam</span>
-              </h1>
-            </NavLink>
-          </div>
+    <header
+      className={`fixed inset-x-0 top-0 z-50 border-b transition-[background-color,border-color] duration-300 ${
+        solid ? "border-line bg-bg/85 backdrop-blur-xl backdrop-saturate-150" : "border-transparent"
+      }`}
+    >
+      <nav aria-label="Main" className="container-page flex h-16 items-center justify-between gap-4">
+        <Link to="/" onClick={close} className="group flex items-center gap-3" aria-label="Pranaw Gautam, home">
+          <span className="relative grid size-9 place-items-center rounded-[11px] bg-ink font-mono text-[0.78rem] font-semibold tracking-tight text-bg transition-transform duration-300 ease-out-expo group-hover:-rotate-6">
+            PG
+            <span className="absolute -top-0.5 -right-0.5 size-2.5 rounded-full bg-accent-bright ring-2 ring-bg" />
+          </span>
+          <span className="hidden text-[0.95rem] font-medium tracking-tight sm:block">Pranaw Gautam</span>
+        </Link>
 
-          {/* Desktop Menu */}
-          <div className="hidden md:flex items-center space-x-2">
-            {navItems.map((item) => (
-              <NavLink
-                key={item.name}
-                to={item.to}
-                className={({ isActive }) =>
-                  `px-4 py-2 rounded-lg text-sm font-bold transition-all duration-200 ${
-                    isActive
-                      ? "text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/30"
-                      : "text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-gray-50 dark:hover:bg-gray-800"
-                  }`
-                }
-              >
-                {item.name}
-              </NavLink>
-            ))}
-          </div>
-
-          {/* Mobile button */}
-          <div className="md:hidden flex items-center">
-            <button
-              onClick={() => setIsOpen(!isOpen)}
-              className="p-2 rounded-lg text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
-            >
-              {isOpen ? <X size={24} /> : <Menu size={24} />}
-            </button>
-          </div>
-        </div>
-
-        {/* Mobile Menu */}
-        {isOpen && (
-          <div className="md:hidden border-t border-gray-200 dark:border-gray-800 bg-white/95 dark:bg-gray-900/95 backdrop-blur-md">
-            <div className="px-4 pt-2 pb-4 space-y-1">
-              {navItems.map((item) => (
-                <NavLink
-                  key={item.name}
-                  to={item.to}
-                  className={({ isActive }) =>
-                    `block px-4 py-3 rounded-xl text-base font-bold transition-all duration-200 ${
-                      isActive
-                        ? "text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/30 pl-6 border-l-4 border-blue-600 dark:border-blue-400"
-                        : "text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-gray-50 dark:hover:bg-gray-800"
-                    }`
-                  }
+        <ul className="hidden items-center gap-0.5 md:flex">
+          {navItems.map((item) => {
+            const isActive = active === item.id;
+            return (
+              <li key={item.id}>
+                <Link
+                  to={`/#${item.id}`}
+                  aria-current={isActive ? "true" : undefined}
+                  data-active={isActive || undefined}
+                  className="group relative block rounded-full px-3.5 py-2 text-sm text-muted transition-colors hover:text-ink data-active:text-ink"
                 >
-                  {item.name}
-                </NavLink>
-              ))}
-            </div>
+                  {item.label}
+                  <span
+                    aria-hidden="true"
+                    className="absolute inset-x-3.5 bottom-1 h-px origin-left scale-x-0 bg-accent transition-transform duration-500 ease-out-expo group-hover:scale-x-50 group-data-active:scale-x-100"
+                  />
+                </Link>
+              </li>
+            );
+          })}
+        </ul>
+
+        <div className="flex items-center gap-1.5">
+          <ThemeToggle />
+          <div className="hidden md:block">
+            <ButtonLink href={profile.resume} external variant="secondary" size="sm">
+              Résumé
+              <ArrowUpRight className="size-3.5 transition-transform duration-300 group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5" />
+            </ButtonLink>
           </div>
+          <button
+            type="button"
+            onClick={() => setOpen((o) => !o)}
+            aria-expanded={open}
+            aria-controls="mobile-menu"
+            aria-label={open ? "Close menu" : "Open menu"}
+            className="grid size-10 place-items-center rounded-full text-ink transition-colors hover:bg-bg-soft md:hidden"
+          >
+            <span className="relative block h-3 w-5" aria-hidden="true">
+              <span
+                className={`absolute left-0 h-[1.5px] w-5 rounded bg-current transition-all duration-300 ease-out-expo ${open ? "top-[5px] rotate-45" : "top-0"}`}
+              />
+              <span
+                className={`absolute left-0 h-[1.5px] w-5 rounded bg-current transition-all duration-300 ease-out-expo ${open ? "top-[5px] -rotate-45" : "top-[10px]"}`}
+              />
+            </span>
+          </button>
+        </div>
+      </nav>
+
+      <AnimatePresence>
+        {open && (
+          <m.div
+            id="mobile-menu"
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: "calc(100dvh - 4rem)" }}
+            exit={{ opacity: 0, height: 0 }}
+            transition={{ duration: 0.45, ease: EASE }}
+            className="overflow-hidden bg-bg md:hidden"
+          >
+            <div className="container-page flex h-full flex-col justify-between overflow-y-auto pt-6 pb-10">
+              <ul className="flex flex-col">
+                {navItems.map((item, i) => (
+                  <m.li
+                    key={item.id}
+                    initial={{ opacity: 0, y: 14 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.5, ease: EASE, delay: 0.06 + i * 0.05 }}
+                    className="border-b border-line"
+                  >
+                    <Link
+                      to={`/#${item.id}`}
+                      onClick={close}
+                      className="flex items-baseline justify-between py-4 text-3xl font-semibold tracking-[-0.03em]"
+                    >
+                      {item.label}
+                      <span className="font-mono text-xs text-muted">0{i + 1}</span>
+                    </Link>
+                  </m.li>
+                ))}
+              </ul>
+
+              <m.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.5, delay: 0.3 }}
+                className="mt-10 space-y-5"
+              >
+                <ButtonLink href={profile.resume} external variant="primary" size="lg" className="w-full" onClick={close}>
+                  <FileText className="size-4" /> View résumé
+                </ButtonLink>
+                <div className="flex items-center justify-center gap-2 text-muted">
+                  <a href={`mailto:${profile.email}`} aria-label="Email" className="grid size-11 place-items-center rounded-full border border-line hover:text-ink">
+                    <Mail className="size-[18px]" />
+                  </a>
+                  <a href={profile.links.linkedin} target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" className="grid size-11 place-items-center rounded-full border border-line hover:text-ink">
+                    <LinkedInIcon className="size-[17px]" />
+                  </a>
+                  <a href={profile.links.github} target="_blank" rel="noopener noreferrer" aria-label="GitHub" className="grid size-11 place-items-center rounded-full border border-line hover:text-ink">
+                    <GitHubIcon className="size-[18px]" />
+                  </a>
+                </div>
+              </m.div>
+            </div>
+          </m.div>
         )}
-      </div>
-    </nav>
+      </AnimatePresence>
+    </header>
   );
 }

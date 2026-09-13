@@ -1,88 +1,161 @@
 @import "tailwindcss";
 
+/* Dark mode is class-based so the header toggle can override the OS setting.
+   index.html sets the class before first paint. */
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* ===== Design tokens ===== */
+:root {
+  --bg: #f6f4ef;
+  --bg-soft: #efece4;
+  --surface: #fcfbf8;
+  --ink: #17160f;
+  --ink-soft: #3b3930;
+  --muted: #6b675d;
+  --line: #e3dfd4;
+  --line-strong: #cbc6b8;
+  --accent: #c4400f;
+  --accent-bright: #e2552a;
+  --accent-soft: #f6e2d6;
+  --shadow-color: 40 30 10;
+  color-scheme: light;
+}
+
+.dark {
+  --bg: #0f0f0d;
+  --bg-soft: #141412;
+  --surface: #181815;
+  --ink: #f1eee6;
+  --ink-soft: #d6d2c7;
+  --muted: #9d998d;
+  --line: #2a2924;
+  --line-strong: #3d3b34;
+  --accent: #ff8a5c;
+  --accent-bright: #ff7a45;
+  --accent-soft: #2c1a12;
+  --shadow-color: 0 0 0;
+  color-scheme: dark;
+}
+
+@theme inline {
+  --color-bg: var(--bg);
+  --color-bg-soft: var(--bg-soft);
+  --color-surface: var(--surface);
+  --color-ink: var(--ink);
+  --color-ink-soft: var(--ink-soft);
+  --color-muted: var(--muted);
+  --color-line: var(--line);
+  --color-line-strong: var(--line-strong);
+  --color-accent: var(--accent);
+  --color-accent-bright: var(--accent-bright);
+  --color-accent-soft: var(--accent-soft);
+}
+
+@theme {
+  --font-sans: "Geist", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono: "Geist Mono", ui-monospace, SFMono-Regular, Consolas, monospace;
+  --font-serif: "Instrument Serif", ui-serif, Georgia, serif;
+  --ease-out-expo: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* ===== Base ===== */
 @layer base {
   html {
-    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+    -webkit-tap-highlight-color: transparent;
   }
 
   body {
-    /* v4 automatically understands these classes now */
-    @apply bg-gray-50 text-gray-900 antialiased dark:bg-gray-900 dark:text-gray-100;
+    @apply bg-bg font-sans text-ink antialiased;
+    font-feature-settings: "ss01", "cv11";
+    text-rendering: optimizeLegibility;
   }
 
   ::selection {
-    @apply bg-blue-600 text-white;
+    background: var(--accent);
+    color: var(--bg);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+  }
+
+  section[id] {
+    scroll-margin-top: 5rem;
+  }
+
+  img {
+    color: transparent; /* hide alt text flash while loading */
   }
 }
 
-/* Custom Global Animations */
+/* ===== Reusable pieces ===== */
+@layer components {
+  .container-page {
+    @apply mx-auto w-full max-w-6xl px-5 sm:px-8;
+  }
+
+  .eyebrow {
+    @apply font-mono text-[0.72rem] font-medium tracking-[0.14em] text-muted uppercase;
+  }
+
+  .card {
+    @apply rounded-3xl border border-line bg-surface;
+  }
+
+  .shadow-soft {
+    box-shadow:
+      0 1px 2px rgb(var(--shadow-color) / 0.04),
+      0 12px 32px -12px rgb(var(--shadow-color) / 0.12);
+  }
+
+  .shadow-lift {
+    box-shadow:
+      0 1px 2px rgb(var(--shadow-color) / 0.06),
+      0 24px 48px -16px rgb(var(--shadow-color) / 0.22);
+  }
+}
+
 @layer utilities {
-  .animate-fade-in {
-    animation: fadeIn 0.6s ease-out forwards;
-  }
-  
-  .animate-slow-marquee {
-    animation: marquee 30s linear infinite;
+  .text-balance {
+    text-wrap: balance;
   }
 
-  .animate-blob {
-    animation: blob 7s infinite;
+  .text-pretty {
+    text-wrap: pretty;
   }
 
-  .animation-delay-2000 {
-    animation-delay: 2s;
-  }
-
-  .animation-delay-4000 {
-    animation-delay: 4s;
+  .tabular {
+    font-variant-numeric: tabular-nums;
   }
 }
 
-/* Keyframes */
-@keyframes fadeIn {
-  from {
+/* "Currently at" live indicator */
+@keyframes ping-soft {
+  0% {
+    transform: scale(1);
+    opacity: 0.55;
+  }
+  80%,
+  100% {
+    transform: scale(2.4);
     opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
   }
 }
 
-@keyframes marquee {
-  0% {
-    transform: translateX(0);
-  }
-  100% {
-    transform: translateX(-50%);
-  }
+.animate-ping-soft {
+  animation: ping-soft 2.4s cubic-bezier(0, 0, 0.2, 1) infinite;
 }
 
-@keyframes blob {
-  0% {
-    transform: translate(0px, 0px) scale(1);
+/* ===== Reduced motion ===== */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
   }
-  33% {
-    transform: translate(30px, -50px) scale(1.1);
-  }
-  66% {
-    transform: translate(-20px, 20px) scale(0.9);
-  }
-  100% {
-    transform: translate(0px, 0px) scale(1);
-  }
-}
-
-/* Custom Scrollbar */
-::-webkit-scrollbar {
-  width: 10px;
-}
-
-::-webkit-scrollbar-track {
-  @apply bg-gray-100 dark:bg-gray-900;
-}
-
-::-webkit-scrollbar-thumb {
-  @apply bg-gray-300 dark:bg-gray-700 rounded-full border-2 border-solid border-gray-100 dark:border-gray-900 hover:bg-gray-400 dark:hover:bg-gray-600 transition-colors;
 }

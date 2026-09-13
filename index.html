@@ -2,12 +2,77 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>my-portfolio</title>
+    <title>Pranaw Gautam — Data Analyst, AI/ML Engineer & Flutter Developer</title>
+    <meta
+      name="description"
+      content="Pranaw Gautam is a data analyst, AI/ML engineer and web & Flutter developer at Vibe6 Digital. Case studies in recommendation systems, analytics pipelines and Power BI."
+    />
+    <meta name="author" content="Pranaw Gautam" />
+    <meta name="theme-color" content="#f6f4ef" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#0f0f0d" media="(prefers-color-scheme: dark)" />
+    <link rel="canonical" href="https://my-portfolio-two-gilt-97.vercel.app/" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://my-portfolio-two-gilt-97.vercel.app/" />
+    <meta property="og:title" content="Pranaw Gautam — Data Analyst, AI/ML Engineer & Flutter Developer" />
+    <meta
+      property="og:description"
+      content="Recommendation systems, analytics pipelines and the apps that put them to work."
+    />
+    <meta property="og:image" content="https://my-portfolio-two-gilt-97.vercel.app/og-image.jpg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Geist:wght@400..700&family=Geist+Mono:wght@400;500&family=Instrument+Serif:ital@1&display=swap"
+    />
+    <link
+      rel="preload"
+      as="image"
+      type="image/webp"
+      imagesrcset="/images/profile-480.webp 480w, /images/profile-960.webp 960w"
+      imagesizes="(min-width: 1024px) 304px, (min-width: 768px) 256px, 80px"
+    />
+
+    <!-- Apply the saved or system theme before first paint to avoid a flash -->
+    <script>
+      (function () {
+        try {
+          var saved = localStorage.getItem("theme");
+          var dark = saved ? saved === "dark" : matchMedia("(prefers-color-scheme: dark)").matches;
+          document.documentElement.classList.toggle("dark", dark);
+        } catch (e) {}
+      })();
+    </script>
+
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "Pranaw Gautam",
+        "jobTitle": "Data Analyst, AI/ML Engineer & Flutter Developer",
+        "worksFor": { "@type": "Organization", "name": "Vibe6 Digital" },
+        "address": { "@type": "PostalAddress", "addressLocality": "Satna", "addressRegion": "Madhya Pradesh", "addressCountry": "IN" },
+        "email": "mailto:pranawgautam@gmail.com",
+        "url": "https://my-portfolio-two-gilt-97.vercel.app/",
+        "sameAs": ["https://github.com/Pranaw108", "https://www.linkedin.com/in/pranaw-gautam9"]
+      }
+    </script>
   </head>
   <body>
     <div id="root"></div>
+    <noscript>
+      <p style="padding: 2rem; font-family: system-ui, sans-serif">
+        This portfolio needs JavaScript. You can reach Pranaw Gautam at
+        <a href="mailto:pranawgautam@gmail.com">pranawgautam@gmail.com</a>.
+      </p>
+    </noscript>
     <script type="module" src="/src/main.jsx"></script>
   </body>
 </html>
