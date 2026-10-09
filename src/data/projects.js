@@ -68,6 +68,105 @@ export const projects = [
     galleryNote: "Emulator screenshots · placeholder cover art, app branding removed.",
   },
   {
+    // Research project, still in progress. Every number below is from
+    // ml/training/RESULTS.md and docs/ROADMAP.md in the repo.
+    slug: "kisanshield-fl",
+    title: "KisanShield-FL",
+    kind: "Machine learning · Research in progress",
+    year: "2026",
+    summary:
+      "Crop disease classification for soybean, wheat and pulses in Madhya Pradesh, built on six public datasets — with a per-source audit that caught the model reading the dataset instead of the disease.",
+    problem:
+      "A smallholder farmer photographs a leaf and needs to know what is wrong with it, offline, in Hindi. The research question underneath is harder: public plant-disease datasets each come from one place and one camera, so a model can score well by recognising the dataset rather than the disease — and that model would be useless in a real field.",
+    role: "Solo — dataset curation, evaluation design, baseline model, prediction API and app scaffolding",
+    stack: ["Python", "TensorFlow", "Keras", "EfficientNetB0", "scikit-learn", "pytest", "FastAPI", "Flutter", "React", "TypeScript"],
+    source: "https://github.com/Pranaw108/kisanshield-fl",
+    visual: "sourceBias",
+    highlight: {
+      value: "0.78",
+      label: "test macro-F1 across 12 classes — and a per-source audit showing where that number is misleading",
+    },
+    results: [
+      {
+        value: "0.7833",
+        label: "Test macro-F1 (validation 0.7987) over 12 classes and 13,618 images, on frozen EfficientNetB0 features",
+      },
+      {
+        value: "88.9% vs 35.0%",
+        label:
+          "Accuracy for the same class (healthy wheat) between its two source datasets — the audit that proves the headline number hides a shortcut",
+      },
+      {
+        value: "6 datasets",
+        label: "Public datasets registered with licence status and citations, no images redistributed in the repo",
+      },
+    ],
+    approach: [
+      {
+        title: "Register the data, not just download it",
+        body: "Six public datasets recorded in a config file with their source, licence and per-class mapping. One is non-commercial, so the repo notes that any commercial model must be retrained without it.",
+      },
+      {
+        title: "Build a manifest with duplicate and quality checks",
+        body: "Every image is hashed for exact duplicates and perceptually hashed for near-duplicates, then scored for size and blur. Images read straight from the zip archives, so nothing is extracted and no disk is wasted.",
+      },
+      {
+        title: "Make expert review safe",
+        body: "An agronomist review pack where 'unsure' holds an image rather than excluding it — not being able to judge a photo is different from rejecting it, and a verdict must never silently delete data nobody rejected.",
+      },
+      {
+        title: "Split so the test set cannot leak",
+        body: "Train, validation and test splits grouped by dataset and class, so near-identical photos from one source cannot straddle the split and inflate the score.",
+      },
+      {
+        title: "Train a baseline, then distrust it",
+        body: "A frozen-backbone baseline trains in 48 seconds and reaches 0.78 test macro-F1. The per-source breakdown is the part that matters: healthy wheat scores 88.9% on one dataset and 35.0% on the other, so the model is partly reading provenance.",
+      },
+      {
+        title: "Serve it, end to end",
+        body: "A v0 FastAPI service serves the model, with a Flutter app and a React demo calling it — enough to show the model working before any on-device work begins.",
+      },
+      {
+        title: "Still ahead",
+        body: "Federated learning, the privacy layer, on-device inference and the advisory knowledge base are designed but not built. Until the advisory base is reviewed by an agronomist, a test asserts the UI renders no treatment advice at all.",
+      },
+    ],
+    features: [
+      "Six public datasets mapped to one 12-class taxonomy, with licences tracked",
+      "Exact and near-duplicate detection across every source",
+      "Per-source accuracy audit that exposes dataset shortcuts",
+      "Grouped splits so near-identical images cannot cross the test boundary",
+      "Expert review pack where “unsure” holds an image instead of dropping it",
+      "A test that fails if the UI ever shows unreviewed treatment advice",
+    ],
+    sourceBias: {
+      note: "Only three classes appear in more than one dataset. Healthy wheat is the warning: an 88.9% / 35.0% split means the model is partly reading which dataset a photo came from. Fixing this needs field photographs, which is the project's biggest open gap.",
+      classes: [
+        {
+          label: "Wheat · healthy",
+          sources: [
+            { short: "Kaggle wheat", n: 99, accuracy: 0.889 },
+            { short: "YELLOW-RUST-19", n: 20, accuracy: 0.35 },
+          ],
+        },
+        {
+          label: "Wheat · yellow rust",
+          sources: [
+            { short: "Kaggle wheat", n: 90, accuracy: 0.956 },
+            { short: "YELLOW-RUST-19", n: 517, accuracy: 0.986 },
+          ],
+        },
+        {
+          label: "Soybean · healthy",
+          sources: [
+            { short: "MH-SoyaHealthVision", n: 20, accuracy: 1.0 },
+            { short: "SoyNet", n: 12, accuracy: 1.0 },
+          ],
+        },
+      ],
+    },
+  },
+  {
     slug: "space-launch-analytics",
     title: "Space Launch Analytics",
     kind: "Data analytics · Business intelligence",

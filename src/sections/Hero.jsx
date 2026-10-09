@@ -74,12 +74,18 @@ export default function Hero() {
               {profile.intro}
             </m.p>
 
+            {/* Three paths on purpose: a client starting a project, anyone
+                checking the work, and a recruiter who wants the résumé. */}
             <m.div {...fadeUp(0.6)} className="mt-9 flex flex-wrap items-center gap-3">
-              <ButtonLink to="/#work" size="lg">
+              <ButtonLink to="/#contact" size="lg">
+                Start a project
+                <ArrowDown className="size-4 transition-transform duration-300 group-hover/btn:translate-y-0.5" />
+              </ButtonLink>
+              <ButtonLink to="/#work" variant="secondary" size="lg">
                 See my work
                 <ArrowDown className="size-4 transition-transform duration-300 group-hover/btn:translate-y-0.5" />
               </ButtonLink>
-              <ButtonLink href={profile.resume} external variant="secondary" size="lg">
+              <ButtonLink href={profile.resume} external variant="ghost" size="lg">
                 Résumé
                 <ArrowUpRight className="size-4 transition-transform duration-300 group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5" />
               </ButtonLink>

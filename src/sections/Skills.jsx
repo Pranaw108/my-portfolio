@@ -1,12 +1,13 @@
 import { skillGroups } from "../data/skills";
 import SectionHeading from "../components/SectionHeading";
 import Reveal from "../components/Reveal";
+import { sectionIndex } from "../data/sections";
 
 export default function Skills() {
   return (
-    <section id="skills" className="border-y border-line bg-bg-soft py-24 md:py-32">
+    <section id="skills" aria-labelledby="skills-title" className="border-y border-line bg-bg-soft py-24 md:py-32">
       <div className="container-page">
-        <SectionHeading index="04" eyebrow="Toolkit" title="The tools I reach for.">
+        <SectionHeading index={sectionIndex("skills")} titleId="skills-title" eyebrow="Toolkit" title="The tools I reach for.">
           Grouped by the job they do. No skill bars — the case studies show how I use them.
         </SectionHeading>
 

@@ -2,12 +2,13 @@ import { ArrowUpRight, Trophy } from "lucide-react";
 import { certifications, goer, rmat } from "../data/credentials";
 import SectionHeading from "../components/SectionHeading";
 import Reveal from "../components/Reveal";
+import { sectionIndex } from "../data/sections";
 
 export default function Credentials() {
   return (
-    <section id="credentials" className="py-24 md:py-32">
+    <section id="credentials" aria-labelledby="credentials-title" className="py-24 md:py-32">
       <div className="container-page">
-        <SectionHeading index="05" eyebrow="Achievements & credentials" title="Recognition and certifications." />
+        <SectionHeading index={sectionIndex("credentials")} titleId="credentials-title" eyebrow="Achievements & credentials" title="Recognition and certifications." />
 
         <div className="mt-14 grid gap-5 lg:grid-cols-3">
           <Reveal className="card relative overflow-hidden p-7 sm:p-9 lg:col-span-2">

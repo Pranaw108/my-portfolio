@@ -2,15 +2,16 @@ import { GraduationCap } from "lucide-react";
 import { about, education } from "../data/profile";
 import SectionHeading from "../components/SectionHeading";
 import Reveal from "../components/Reveal";
+import { sectionIndex } from "../data/sections";
 
 export default function About() {
   const [lead, ...rest] = about;
 
   return (
-    <section id="about" className="border-t border-line py-24 md:py-32">
+    <section id="about" aria-labelledby="about-title" className="border-t border-line py-24 md:py-32">
       <div className="container-page grid gap-12 lg:grid-cols-12 lg:gap-8">
         <div className="lg:col-span-4">
-          <SectionHeading index="03" eyebrow="About" title="Where data meets product." />
+          <SectionHeading index={sectionIndex("about")} titleId="about-title" eyebrow="About" title="Where data meets product." />
         </div>
 
         <div className="lg:col-span-8">

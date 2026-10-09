@@ -5,9 +5,13 @@ import ButtonLink from "../components/Button";
 import CopyEmail from "../components/CopyEmail";
 import { GitHubIcon, LinkedInIcon } from "../components/BrandIcons";
 
-export default function Contact() {
+/**
+ * Closing panel with the direct ways to reach me. The "contact" section id and
+ * heading belong to StartProject (the form) — this sits underneath it.
+ */
+export default function ContactPanel() {
   return (
-    <section id="contact" aria-labelledby="contact-title" className="pb-24 md:pb-32">
+    <section aria-labelledby="other-contact-title" className="pb-24 md:pb-32">
       <div className="container-page">
         {/* Always-dark panel, so colours are fixed rather than theme tokens */}
         <Reveal className="relative isolate overflow-hidden rounded-[2.5rem] bg-[#141310] px-6 py-16 text-[#f1eee6] sm:px-12 md:px-16 md:py-24 dark:ring-1 dark:ring-white/10">
@@ -17,19 +21,19 @@ export default function Contact() {
           </div>
 
           <p className="eyebrow flex items-center gap-3 text-[#a8a395]">
-            <span className="text-[#ff8a5c]">06</span>
             <span className="h-px w-8 bg-white/20" aria-hidden="true" />
-            Contact
+            Other ways to reach me
           </p>
           <h2
-            id="contact-title"
+            id="other-contact-title"
             className="mt-6 max-w-3xl text-[clamp(2.4rem,6vw,4.5rem)] leading-[0.98] font-semibold tracking-[-0.045em] text-balance"
           >
-            Got data that should be doing more?{" "}
-            <span className="font-serif font-normal tracking-[-0.02em] text-[#ff8a5c] italic">Let's talk.</span>
+            Prefer email?{" "}
+            <span className="font-serif font-normal tracking-[-0.02em] text-[#ff8a5c] italic">That works too.</span>
           </h2>
           <p className="mt-6 max-w-xl text-lg leading-relaxed text-[#b9b4a8] text-pretty">
-            Whether it's a role, a project or a question about my work — email is the quickest way to reach me.
+            The form above reaches me fastest, but a direct email is just as good — and if you're hiring rather than
+            commissioning, this is the quickest route.
           </p>
 
           <div className="mt-10 flex flex-wrap items-center gap-x-4 gap-y-3">

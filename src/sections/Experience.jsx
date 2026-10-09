@@ -2,14 +2,15 @@ import { experience } from "../data/experience";
 import SectionHeading from "../components/SectionHeading";
 import Reveal from "../components/Reveal";
 import Tag from "../components/Tag";
+import { sectionIndex } from "../data/sections";
 
 export default function Experience() {
   return (
-    <section id="experience" className="border-t border-line py-24 md:py-32">
+    <section id="experience" aria-labelledby="experience-title" className="border-t border-line py-24 md:py-32">
       <div className="container-page grid gap-12 lg:grid-cols-12 lg:gap-8">
         <div className="lg:col-span-4">
           <div className="lg:sticky lg:top-28">
-            <SectionHeading index="02" eyebrow="Experience" title="Where I've been building." />
+            <SectionHeading index={sectionIndex("experience")} titleId="experience-title" eyebrow="Experience" title="Where I've been building." />
           </div>
         </div>
 

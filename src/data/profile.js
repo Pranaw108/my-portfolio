@@ -41,10 +41,5 @@ export const education = [
   },
 ];
 
-export const navItems = [
-  { id: "work", label: "Work" },
-  { id: "experience", label: "Experience" },
-  { id: "about", label: "About" },
-  { id: "credentials", label: "Credentials" },
-  { id: "contact", label: "Contact" },
-];
+// Nav and section numbering now live in data/sections.js, so inserting a
+// section cannot leave the two out of step.

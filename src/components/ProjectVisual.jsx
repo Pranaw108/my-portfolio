@@ -1,4 +1,5 @@
 import QualityHeatmap from "./QualityHeatmap";
+import SourceBiasChart from "./SourceBiasChart";
 
 function PhoneStack({ project }) {
   const [left, center, right] = [project.gallery[0], project.gallery[1], project.gallery[2]];
@@ -70,9 +71,26 @@ function HeatmapPanel({ project }) {
   );
 }
 
-const visuals = { phones: PhoneStack, dashboard: DashboardShot, heatmap: HeatmapPanel };
+function SourceBiasPanel({ project }) {
+  return (
+    <div className="flex h-full min-h-64 items-center bg-bg-soft p-5 sm:min-h-96 sm:p-10">
+      <div className="mx-auto w-full max-w-3xl rounded-2xl border border-line bg-surface p-4 shadow-soft transition-transform duration-700 ease-out-expo group-hover:-translate-y-1 sm:p-6">
+        <SourceBiasChart data={project.sourceBias} />
+      </div>
+    </div>
+  );
+}
+
+const visuals = {
+  phones: PhoneStack,
+  dashboard: DashboardShot,
+  heatmap: HeatmapPanel,
+  sourceBias: SourceBiasPanel,
+};
 
 export default function ProjectVisual({ project }) {
   const Visual = visuals[project.visual];
+  // A project without a known visual renders nothing rather than crashing the page.
+  if (!Visual) return null;
   return <Visual project={project} />;
 }

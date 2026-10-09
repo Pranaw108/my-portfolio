@@ -1,12 +1,13 @@
 import { projects } from "../data/projects";
 import SectionHeading from "../components/SectionHeading";
 import ProjectCard from "../components/ProjectCard";
+import { sectionIndex } from "../data/sections";
 
 export default function Work() {
   return (
-    <section id="work" className="py-24 md:py-32">
+    <section id="work" aria-labelledby="work-title" className="py-24 md:py-32">
       <div className="container-page">
-        <SectionHeading index="01" eyebrow="Selected work" title="From raw data to something people can use.">
+        <SectionHeading index={sectionIndex("work")} titleId="work-title" eyebrow="Selected work" title="From raw data to something people can use.">
           Three case studies across machine learning, analytics engineering and business intelligence — each with the
           problem, my role and what came out of it.
         </SectionHeading>

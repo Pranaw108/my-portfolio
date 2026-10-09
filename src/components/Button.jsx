@@ -21,6 +21,15 @@ function buttonClasses({ variant = "primary", size = "md", className = "" } = {}
   return `${base} ${variants[variant]} ${sizes[size]} ${className}`;
 }
 
+/** A real <button> for form actions, sharing the link styles above. */
+export function Button({ variant, size, className, children, type = "button", ...props }) {
+  return (
+    <button type={type} className={buttonClasses({ variant, size, className })} {...props}>
+      {children}
+    </button>
+  );
+}
+
 /**
  * One button API for internal routes (`to`), external links (`href`, opens in a
  * new tab) and downloads (`href` + `download`).

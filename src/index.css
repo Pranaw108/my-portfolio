@@ -18,6 +18,11 @@
   --accent-bright: #e2552a;
   --accent-soft: #f6e2d6;
   --shadow-color: 40 30 10;
+  /* Chart marks get their own tokens: --accent is tuned for text, and its dark
+     value sits outside the lightness band a data mark needs. Both steps below
+     pass the contrast and colour-blindness checks against --surface. */
+  --chart-1: #c4400f;
+  --chart-2: #0e6e9c;
   color-scheme: light;
 }
 
@@ -34,6 +39,8 @@
   --accent-bright: #ff7a45;
   --accent-soft: #2c1a12;
   --shadow-color: 0 0 0;
+  --chart-1: #e0603a;
+  --chart-2: #1f8fb5;
   color-scheme: dark;
 }
 
@@ -87,6 +94,42 @@
 
   img {
     color: transparent; /* hide alt text flash while loading */
+  }
+
+  /* Browsers show a text I-beam over any plain text, which makes a static
+     heading or label look clickable. Set the cursor once, here, by role. */
+  body {
+    cursor: default;
+  }
+
+  input:not([type="checkbox"]):not([type="radio"]):not([type="button"]):not([type="submit"]),
+  textarea,
+  [contenteditable="true"] {
+    cursor: text;
+  }
+
+  a[href],
+  label[for],
+  select,
+  summary,
+  button:not(:disabled),
+  input[type="checkbox"],
+  input[type="radio"],
+  input[type="button"]:not(:disabled),
+  input[type="submit"]:not(:disabled),
+  [role="tab"],
+  [role="menuitem"],
+  [role="option"],
+  [role="switch"],
+  [role="combobox"] {
+    cursor: pointer;
+  }
+
+  button:disabled,
+  input:disabled,
+  select:disabled,
+  textarea:disabled {
+    cursor: not-allowed;
   }
 }
 
