@@ -78,6 +78,10 @@ try {
 
   // The newest project and its chart.
   checks["kisanshield card on home"] = html.includes("KisanShield-FL");
+  // The Work lede states a count; it must match how many projects exist.
+  // React puts a <!-- --> marker between adjacent text nodes, so allow it.
+  const countWord = ["No", "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine"][projects.length];
+  checks["work lede count matches project count"] = new RegExp(`${countWord}(<!-- -->)? case studies`).test(html);
   checks["kisanshield source link is the real repo"] = html.includes("https://github.com/Pranaw108/kisanshield-fl");
   checks["source-bias chart rendered"] = (caseStudyHtml["kisanshield-fl"] ?? "").includes(
     "Test accuracy by source dataset",
