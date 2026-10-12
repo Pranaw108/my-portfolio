@@ -1,4 +1,5 @@
 import Hero from "../sections/Hero";
+import Proof from "../sections/Proof";
 import Services from "../sections/Services";
 import Work from "../sections/Work";
 import Experience from "../sections/Experience";
@@ -17,6 +18,7 @@ export default function Home() {
   return (
     <>
       <Hero />
+      <Proof />
       <Services />
       <Work />
       <Experience />

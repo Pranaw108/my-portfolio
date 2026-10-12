@@ -91,6 +91,24 @@ try {
     "learning the source rather than the disease",
   );
 
+  // Borrowed from the reference portfolio: category filter, toolkit marquee,
+  // countable stats band.
+  checks["work category filter rendered"] = html.includes('aria-label="Filter work by category"');
+  checks["filter offers every category"] = ["Machine learning", "Data engineering", "Analytics", "Apps"]
+    .every((name) => html.includes(`>${name}`));
+  checks["filter announces changes to screen readers"] = html.includes('aria-live="polite"');
+  checks["toolkit marquee rendered"] = html.includes("animate-marquee");
+  checks["marquee hidden from screen readers"] = /animate-marquee[\s\S]{0,400}/.test(html)
+    && html.includes('aria-hidden="true"');
+  checks["stats band rendered"] = html.includes("case studies") && html.includes("public repositories");
+  checks["stats avoid unverifiable vanity metrics"] =
+    !/happy clients|years of experience/i.test(html);
+
+  // Vayu replaced a stale entry, so its real figures must be the ones shown.
+  checks["vayu shows the verified skill figure"] = html.includes("+35.0%") || html.includes("+35%");
+  checks["vayu links its public repo"] = html.includes("https://github.com/Pranaw108/vayu-aqi");
+  checks["stale air-quality numbers are gone"] = !html.includes("141,752");
+
   const failures = Object.entries(checks).filter(([, ok]) => !ok);
   for (const [name, ok] of Object.entries(checks)) {
     console.log(`${ok ? "PASS" : "FAIL"}  ${name}`);

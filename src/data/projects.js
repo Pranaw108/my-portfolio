@@ -4,6 +4,7 @@ export const projects = [
   {
     // Client project: the platform is deliberately not named anywhere on the site.
     slug: "audio-recommender",
+    categories: ["Machine learning", "Apps"],
     title: "Personalized Audio Recommender",
     kind: "Machine learning · Flutter app",
     year: "2026",
@@ -71,6 +72,7 @@ export const projects = [
     // Research project, still in progress. Every number below is from
     // ml/training/RESULTS.md and docs/ROADMAP.md in the repo.
     slug: "kisanshield-fl",
+    categories: ["Machine learning", "Apps"],
     title: "KisanShield-FL",
     kind: "Machine learning · Research in progress",
     year: "2026",
@@ -168,6 +170,7 @@ export const projects = [
   },
   {
     slug: "space-launch-analytics",
+    categories: ["Analytics"],
     title: "Space Launch Analytics",
     kind: "Data analytics · Business intelligence",
     year: "2026",
@@ -214,51 +217,83 @@ export const projects = [
     ],
   },
   {
-    slug: "air-quality-analysis",
-    title: "Air Quality & Pollution Tracking",
-    kind: "Data engineering · Analytics",
+    slug: "vayu-air-quality",
+    categories: ["Machine learning", "Data engineering"],
+    title: "Vayu — Air Quality Forecasting",
+    kind: "Machine learning · Data engineering",
     year: "2026",
     summary:
-      "A Python ETL and SQL analytics pipeline that turns inconsistent Indian air-quality records into clean, query-ready data on PM2.5, NO₂ and four other pollutants.",
+      "A forecasting service built on India's full CPCB monitoring archive: 71.8 million station readings turned into a 6-hour PM2.5 forecast that beats the standard baseline by 35%.",
     problem:
-      "Public air-quality data arrives as separate city, station and national files with inconsistent columns, unsorted timestamps and large gaps — PM10 is missing from over a third of city and station readings. Before anyone can ask where and when pollution peaks, the data has to be made trustworthy.",
-    role: "Solo — pipeline, analysis and the AQI forecasting now in progress",
-    stack: ["Python", "Pandas", "NumPy", "SQLAlchemy", "SQL", "Parquet"],
-    source: null,
-    sourceLabel: "Source on request",
-    sourceNote: "Source isn't public yet — available on request.",
+      "India has over 500 air-quality monitoring stations, but the archive arrives as 546 CSV files with 113 different header layouts, 84 stations sharing one placeholder coordinate, and no AQI column at all. Before anyone can forecast air quality, the data has to be made trustworthy — and then the forecast has to be proven better than simply assuming tomorrow looks like today.",
+    role: "Solo — data engineering, the CPCB AQI engine, feature design, modelling and honest evaluation",
+    stack: ["Python", "DuckDB", "Parquet", "LightGBM", "scikit-learn", "pandas", "pytest", "FastAPI"],
+    source: "https://github.com/Pranaw108/vayu-aqi",
     visual: "heatmap",
-    highlight: { value: "141,752", label: "national readings unified from three files, with every pollutant's data quality measured" },
+    highlight: {
+      value: "+35%",
+      label: "better than the persistence baseline at 6 hours ahead, with 66.5% of pollution-episode onsets detected",
+    },
     results: [
-      { value: "141,752", label: "Rows in the unified national dataset, built from three source files" },
-      { value: "6", label: "Pollutants validated per source: PM2.5, PM10, NO₂, SO₂, CO and O₃" },
-      { value: "44.5%", label: "PM10 missing nationally — the kind of gap the quality report makes visible before analysis" },
+      {
+        value: "+35.0%",
+        label: "Lower error than persistence at +6h (MAE 41.4 vs 63.7 µg/m³) across 12 rolling-origin folds",
+      },
+      {
+        value: "66.5% / 73.5%",
+        label: "Recall and precision on episode onsets — hours that go from clean air to unhealthy. Persistence detects 0% of these by construction",
+      },
+      {
+        value: "71,862,029",
+        label: "Station readings normalised from 546 files and 113 different header layouts into one queryable archive",
+      },
     ],
     approach: [
-      { title: "Standardize", body: "Normalized column names and parsed timestamps across every source, then sorted each dataset in time order." },
-      { title: "Clean", body: "Dropped duplicates and fully empty columns; filled gaps with forward-fill and a median fallback, and labeled missing categories explicitly." },
-      { title: "Measure quality", body: "Generated a data-quality summary for each source — missing percentage and negative-value count per pollutant." },
-      { title: "Load", body: "Wrote Parquet outputs and loaded tables through SQLAlchemy — SQLite locally, MySQL or Postgres through configuration." },
-      { title: "Analyze", body: "SQL reports for the most polluted cities by PM2.5, the AQI category distribution and seasonal PM2.5 trends." },
-      { title: "Forecast (in progress)", body: "Extending the pipeline to predict AQI 24–48 hours ahead per monitoring station, as an early warning for unhealthy air." },
+      {
+        title: "Make 546 files into one table",
+        body: "Collapsed 113 distinct header layouts into a single schema and wrote 71.8M readings as partitioned Parquet, queried through DuckDB with no database server to run.",
+      },
+      {
+        title: "Fix the registry before trusting it",
+        body: "Found 84 stations sharing the exact geographic centre of India — a placeholder, not a location — and 106 named after a pollution control board rather than a city. Both are flagged rather than deleted, so they still train a model but never reach a map.",
+      },
+      {
+        title: "Implement the official AQI, not an approximation",
+        body: "Built the CPCB National AQI from its breakpoint tables, including the rule most implementations skip: at least three pollutants, one of which must be PM2.5 or PM10. Below that it returns no value rather than a guess.",
+      },
+      {
+        title: "Catch the sensors that lie",
+        body: "Correlated every station's own thermometer against independent reanalysis and quarantined 22 of them — one reporting a 60°C maximum, another saturated at 100% humidity on a third of rain-free hours. Judged per column, so a good thermometer survives a failed hygrometer.",
+      },
+      {
+        title: "Earn the result against a baseline",
+        body: "Expanding-window validation, never a random split, and every figure reported beside persistence. Three baselines are scored before the model is trained, so 'it works' is a measurable claim.",
+      },
+      {
+        title: "Publish the negative results too",
+        body: "Satellite fire data was added for stubble burning and measurably did not help — average precision moved by under a point at both horizons — so it was dropped and the evidence written down.",
+      },
     ],
     features: [
-      "Multi-source ingestion: city, station and national data",
-      "Automated per-pollutant data-quality report",
-      "Time-aware gap filling with a median fallback",
-      "Parquet outputs and database loading via SQLAlchemy",
-      "SQL reports on polluted cities, AQI buckets and seasonality",
-      "Structured logging for every pipeline run",
+      "6-hour PM2.5 forecast with p10/p50/p90 bands, not a single false point estimate",
+      "Official CPCB AQI engine, proven exact against the published breakpoint tables",
+      "Automatic quarantine of stations whose weather sensors disagree with reanalysis",
+      "Leakage guards that refuse to build rather than warn: a feature table with thin inputs raises instead of training",
+      "A diagnostic that separates a real signal from one merely tracking the season",
+      "222 tests, continuous integration, and a reproducible report for every pipeline stage",
     ],
     dataQuality: {
       pollutants: ["PM2.5", "PM10", "NO₂", "SO₂", "CO", "O₃"],
       sources: [
-        { name: "City", full: "City daily", rows: 25555, values: [9.48, 36.78, 4.62, 4.43, 0.02, 4.3] },
-        { name: "Station", full: "Station daily", rows: 97335, values: [7.97, 35.72, 1.22, 13.67, 8.01, 11.91] },
-        { name: "National", full: "National combined", rows: 141752, values: [20.49, 44.46, 14.97, 23.49, 18.81, 22.26] },
+        { name: "Delhi", full: "Delhi stations", rows: 2200676, values: [3.25, 6.47, 3.28, 10.1, 4.78, 4.76] },
+        { name: "North", full: "North Indian stations", rows: 3143792, values: [5.18, 11.73, 4.97, 8.31, 5.33, 6.21] },
+        { name: "National", full: "All stations", rows: 16773446, values: [6.76, 10.62, 5.33, 8.97, 5.36, 8.45] },
       ],
     },
   },
 ];
 
 export const getProject = (slug) => projects.find((p) => p.slug === slug);
+
+/** Every category that appears, in the order projects are listed. */
+export const projectCategories = [...new Set(projects.flatMap((p) => p.categories ?? []))];

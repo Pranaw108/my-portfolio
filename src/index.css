@@ -191,6 +191,26 @@
   animation: ping-soft 2.4s cubic-bezier(0, 0, 0.2, 1) infinite;
 }
 
+/* Toolkit strip. The list is rendered twice and the track moves exactly half
+   its width, so the loop has no seam. */
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-marquee {
+  animation: marquee 48s linear infinite;
+}
+
+/* Pausing on hover lets someone actually read an item they spotted. */
+.animate-marquee:hover {
+  animation-play-state: paused;
+}
+
 /* ===== Reduced motion ===== */
 @media (prefers-reduced-motion: reduce) {
   *,
@@ -200,5 +220,10 @@
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
+  }
+
+  /* A 0.01ms marquee would strobe, so stop it rather than speed it up. */
+  .animate-marquee {
+    animation: none !important;
   }
 }
