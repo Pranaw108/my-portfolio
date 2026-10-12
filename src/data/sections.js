@@ -5,6 +5,7 @@
 export const sections = [
   { id: "services", label: "Services", inNav: true },
   { id: "work", label: "Work", inNav: true },
+  { id: "ask", label: "Ask", inNav: true },
   { id: "experience", label: "Experience", inNav: true },
   { id: "about", label: "About", inNav: true },
   { id: "skills", label: "Toolkit", inNav: false },

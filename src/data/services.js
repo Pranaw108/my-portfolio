@@ -4,6 +4,8 @@
 export const services = [
   {
     id: "recommendations",
+    icon: "Sparkles",
+    tint: "from-[#c4400f] to-[#e2552a]",
     title: "Recommendation & personalization",
     tagline: "Make an app feel personal from the first session.",
     problem:
@@ -23,6 +25,8 @@ export const services = [
   },
   {
     id: "data-pipelines",
+    icon: "Database",
+    tint: "from-[#1f6f7a] to-[#2b9ec9]",
     title: "Data pipelines & analysis",
     tagline: "Turn a messy export into something you can query.",
     problem:
@@ -42,6 +46,8 @@ export const services = [
   },
   {
     id: "dashboards",
+    icon: "BarChart3",
+    tint: "from-[#7a4b1f] to-[#c08a3e]",
     title: "Dashboards & reporting",
     tagline: "One place to see how the business is doing.",
     problem:
@@ -61,6 +67,8 @@ export const services = [
   },
   {
     id: "ml-apis",
+    icon: "Boxes",
+    tint: "from-[#4a3a7a] to-[#7a5cc4]",
     title: "ML-backed APIs & app features",
     tagline: "Get a model out of the notebook and into the product.",
     problem:

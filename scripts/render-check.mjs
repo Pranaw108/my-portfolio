@@ -43,7 +43,8 @@ try {
     "form has honeypot": html.includes('name="company"'),
     "case study links wired": html.includes('href="/work/audio-recommender"'),
     "services numbered 01": /01<\/span>[\s\S]{0,160}What I can build/.test(html),
-    "contact numbered 08": /08<\/span>[\s\S]{0,160}Start a project/.test(html),
+    // Section numbers are asserted below, derived from sections.js rather than
+    // hardcoded — adding a section used to break this test.
     "every section has an accessible name": [
       "services-title",
       "work-title",
@@ -93,6 +94,17 @@ try {
 
   // Borrowed from the reference portfolio: category filter, toolkit marquee,
   // countable stats band.
+  // Numbering comes from sections.js, so inserting a section cannot leave this
+  // assertion stale the way a hardcoded "08" did. Anchored on each section's own
+  // eyebrow text, because "Start a project" also appears on the hero button.
+  const { sectionIndex } = await server.ssrLoadModule("/src/data/sections.js");
+  for (const [id, eyebrow] of [["contact", "Start a project"], ["ask", "Ask me anything"]]) {
+    const number = sectionIndex(id);
+    checks[`${id} numbered ${number}`] = new RegExp(
+      `${number}</span>[^]{0,200}?${eyebrow}`,
+    ).test(html);
+  }
+
   checks["work category filter rendered"] = html.includes('aria-label="Filter work by category"');
   checks["filter offers every category"] = ["Machine learning", "Data engineering", "Analytics", "Apps"]
     .every((name) => html.includes(`>${name}`));
@@ -108,6 +120,18 @@ try {
   checks["vayu shows the verified skill figure"] = html.includes("+35.0%") || html.includes("+35%");
   checks["vayu links its public repo"] = html.includes("https://github.com/Pranaw108/vayu-aqi");
   checks["stale air-quality numbers are gone"] = !html.includes("141,752");
+
+  // Assistant, quick contact and the restyled service cards.
+  checks["assistant section rendered"] = html.includes('id="ask"');
+  checks["assistant opens without a language model claim"] =
+    html.includes("not a language model");
+  checks["assistant offers starter questions"] = html.includes("Who is Pranaw?");
+  checks["assistant log is announced"] = html.includes('aria-label="Conversation"');
+  checks["quick contact row rendered"] = ["Email", "LinkedIn", "WhatsApp", "GitHub"]
+    .every((label) => html.includes(`>${label}<`));
+  checks["whatsapp uses the real number"] = html.includes("wa.me/918109260602");
+  checks["terminal chrome on the form"] = html.includes("send_message.sh");
+  checks["service cards have icon tiles"] = (html.match(/bg-gradient-to-br/g) ?? []).length >= 4;
 
   const failures = Object.entries(checks).filter(([, ok]) => !ok);
   for (const [name, ok] of Object.entries(checks)) {

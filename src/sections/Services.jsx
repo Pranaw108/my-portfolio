@@ -1,4 +1,4 @@
-import { ArrowRight, Check } from "lucide-react";
+import { ArrowRight, BarChart3, Boxes, Check, Database, Sparkles } from "lucide-react";
 import { Link } from "react-router-dom";
 import { processSteps, services } from "../data/services";
 import { sectionIndex } from "../data/sections";
@@ -6,10 +6,26 @@ import Reveal from "../components/Reveal";
 import SectionHeading from "../components/SectionHeading";
 import Tag from "../components/Tag";
 
+const ICONS = { Sparkles, Database, BarChart3, Boxes };
+
 function ServiceCard({ service }) {
+  const Icon = ICONS[service.icon] ?? Sparkles;
   return (
-    <article className="card group relative flex flex-col p-6 shadow-soft transition-[border-color,box-shadow,transform] duration-500 ease-out-expo hover:-translate-y-0.5 hover:border-line-strong hover:shadow-lift sm:p-8">
-      <h3 className="text-xl font-semibold tracking-[-0.02em] sm:text-2xl">{service.title}</h3>
+    <article className="card group relative isolate flex flex-col overflow-hidden p-6 shadow-soft transition-[border-color,box-shadow,transform] duration-500 ease-out-expo hover:-translate-y-1 hover:border-line-strong hover:shadow-lift sm:p-8">
+      {/* A soft wash that only appears on hover, so the grid stays calm at rest. */}
+      <span
+        aria-hidden="true"
+        className={`pointer-events-none absolute -top-24 -right-24 -z-10 size-56 rounded-full bg-gradient-to-br ${service.tint} opacity-0 blur-3xl transition-opacity duration-700 group-hover:opacity-[0.14]`}
+      />
+
+      <span
+        aria-hidden="true"
+        className={`grid size-12 place-items-center rounded-2xl bg-gradient-to-br ${service.tint} text-white shadow-soft transition-transform duration-500 ease-out-expo group-hover:scale-105`}
+      >
+        <Icon className="size-5" />
+      </span>
+
+      <h3 className="mt-5 text-xl font-semibold tracking-[-0.02em] sm:text-2xl">{service.title}</h3>
       <p className="mt-2 font-serif text-lg italic text-accent">{service.tagline}</p>
 
       <p className="mt-5 leading-relaxed text-muted text-pretty">{service.problem}</p>

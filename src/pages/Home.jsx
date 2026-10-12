@@ -2,6 +2,7 @@ import Hero from "../sections/Hero";
 import Proof from "../sections/Proof";
 import Services from "../sections/Services";
 import Work from "../sections/Work";
+import AskMe from "../sections/AskMe";
 import Experience from "../sections/Experience";
 import About from "../sections/About";
 import Skills from "../sections/Skills";
@@ -21,6 +22,7 @@ export default function Home() {
       <Proof />
       <Services />
       <Work />
+      <AskMe />
       <Experience />
       <About />
       <Skills />

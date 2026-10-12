@@ -6,6 +6,7 @@ import { sectionIndex } from "../data/sections";
 import Reveal from "../components/Reveal";
 import SectionHeading from "../components/SectionHeading";
 import { Button } from "../components/Button";
+import QuickContact from "../components/QuickContact";
 
 const SERVICE_OPTIONS = [...services.map((s) => ({ value: s.id, label: s.title })), { value: "other", label: "Something else" }];
 
@@ -153,13 +154,33 @@ export default function StartProject() {
           eyebrow="Start a project"
           title="Have something you want built?"
           titleId="contact-title"
+          className="mx-auto text-center"
         >
           Tell me the problem rather than the solution — what should be different once it works. I read every message
           myself and reply within a couple of days.
         </SectionHeading>
 
-        <Reveal className="mt-14 md:mt-16">
-          <div className="card p-6 shadow-soft sm:p-8 md:p-10">
+        <Reveal className="mt-10 md:mt-12">
+          <QuickContact />
+        </Reveal>
+
+        <Reveal className="mx-auto mt-10 max-w-3xl md:mt-12">
+          <div className="card overflow-hidden shadow-soft">
+            {/* Terminal chrome: this is the one piece of styling borrowed from the
+                reference site, because a form that looks like a script someone
+                runs suits an engineering portfolio. */}
+            <div className="flex items-center gap-3 border-b border-line bg-bg-soft px-5 py-3.5">
+              <span className="grid size-7 shrink-0 place-items-center rounded-lg bg-ink font-mono text-[0.7rem] text-bg">
+                {">_"}
+              </span>
+              <p className="font-mono text-[0.82rem] text-ink-soft">send_message.sh</p>
+              <span className="ml-auto flex gap-1.5" aria-hidden="true">
+                <span className="size-2.5 rounded-full bg-[#ec6a5e]" />
+                <span className="size-2.5 rounded-full bg-[#f4bf4f]" />
+                <span className="size-2.5 rounded-full bg-[#61c454]" />
+              </span>
+            </div>
+            <div className="p-6 sm:p-8 md:p-10">
             {status === "success" ? (
               <div
                 ref={statusRef}
@@ -325,6 +346,7 @@ export default function StartProject() {
                 )}
               </form>
             )}
+            </div>
           </div>
         </Reveal>
       </div>
