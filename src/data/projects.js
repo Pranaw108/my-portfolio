@@ -74,14 +74,14 @@ export const projects = [
     slug: "kisanshield-fl",
     categories: ["Machine learning", "Apps"],
     title: "KisanShield-FL",
-    kind: "Machine learning · Research in progress",
+    kind: "Machine learning · Web & mobile UI",
     year: "2026",
     summary:
-      "Crop disease classification for soybean, wheat and pulses in Madhya Pradesh, built on six public datasets — with a per-source audit that caught the model reading the dataset instead of the disease.",
+      "Crop disease classification for soybean, wheat and pulses in Madhya Pradesh, with a React diagnosis interface and a Flutter app — and a per-source audit that caught the model reading the dataset instead of the disease.",
     problem:
       "A smallholder farmer photographs a leaf and needs to know what is wrong with it, offline, in Hindi. The research question underneath is harder: public plant-disease datasets each come from one place and one camera, so a model can score well by recognising the dataset rather than the disease — and that model would be useless in a real field.",
-    role: "Solo — dataset curation, evaluation design, baseline model, prediction API and app scaffolding",
-    stack: ["Python", "TensorFlow", "Keras", "EfficientNetB0", "scikit-learn", "pytest", "FastAPI", "Flutter", "React", "TypeScript"],
+    role: "Solo — dataset curation, evaluation design, baseline model, prediction API, and the web and mobile interfaces",
+    stack: ["Python", "TensorFlow", "EfficientNetB0", "FastAPI", "React", "TypeScript", "Vite", "Tailwind CSS", "Vitest", "Flutter", "Dart"],
     source: "https://github.com/Pranaw108/kisanshield-fl",
     visual: "sourceBias",
     highlight: {
@@ -125,8 +125,12 @@ export const projects = [
         body: "A frozen-backbone baseline trains in 48 seconds and reaches 0.78 test macro-F1. The per-source breakdown is the part that matters: healthy wheat scores 88.9% on one dataset and 35.0% on the other, so the model is partly reading provenance.",
       },
       {
-        title: "Serve it, end to end",
-        body: "A v0 FastAPI service serves the model, with a Flutter app and a React demo calling it — enough to show the model working before any on-device work begins.",
+        title: "Build the interface a farmer would actually use",
+        body: "A React and TypeScript web app where a leaf photo is dropped in and the diagnosis comes back with a confidence bar, and a Flutter app doing the same from the camera. Both call the FastAPI service, so the model can be shown working before any on-device work begins.",
+      },
+      {
+        title: "Make the interface enforce the safety rule",
+        body: "The advisory knowledge base has not been reviewed by an agronomist yet, so a test asserts the result screen renders no treatment wording at all — no spray, dose or application text can reach a farmer until an expert signs it off.",
       },
       {
         title: "Still ahead",
@@ -139,7 +143,9 @@ export const projects = [
       "Per-source accuracy audit that exposes dataset shortcuts",
       "Grouped splits so near-identical images cannot cross the test boundary",
       "Expert review pack where “unsure” holds an image instead of dropping it",
-      "A test that fails if the UI ever shows unreviewed treatment advice",
+      "Drag-and-drop diagnosis with a confidence bar, in React and TypeScript",
+      "A Flutter app that diagnoses straight from the camera",
+      "A UI test that fails if treatment wording ever reaches the screen before expert sign-off",
     ],
     sourceBias: {
       note: "Only three classes appear in more than one dataset. Healthy wheat is the warning: an 88.9% / 35.0% split means the model is partly reading which dataset a photo came from. Fixing this needs field photographs, which is the project's biggest open gap.",

@@ -11,6 +11,7 @@ import { renderToString } from "react-dom/server";
 import React from "react";
 // Must come from this one import: loading react-router through ssrLoadModule too
 // would create a second module instance, and the router context would not match.
+import { readFile } from "node:fs/promises";
 import { Route, Routes, StaticRouter } from "react-router";
 
 const server = await createServer({
@@ -132,6 +133,22 @@ try {
   checks["whatsapp uses the real number"] = html.includes("wa.me/918109260602");
   checks["terminal chrome on the form"] = html.includes("send_message.sh");
   checks["service cards have icon tiles"] = (html.match(/bg-gradient-to-br/g) ?? []).length >= 4;
+
+  // The launcher lives in Layout, not Home, so render it on its own. Layout
+  // itself cannot be server-rendered because Navbar reads window.scrollY.
+  const { default: AssistantLauncher } = await server.ssrLoadModule(
+    "/src/components/AssistantLauncher.jsx",
+  );
+  const launcherHtml = renderToString(
+    React.createElement(StaticRouter, { location: "/" }, React.createElement(AssistantLauncher)),
+  );
+  checks["assistant launcher renders"] = launcherHtml.includes("Ask about Pranaw");
+  checks["launcher declares it opens a dialog"] = launcherHtml.includes('aria-haspopup="dialog"');
+  checks["launcher starts closed"] = launcherHtml.includes('aria-expanded="false"');
+  const layoutSource = await readFile(new URL("../src/components/Layout.jsx", import.meta.url), "utf8");
+  checks["launcher is mounted in the layout"] = layoutSource.includes("<AssistantLauncher />");
+  checks["kisanshield shows its UI work"] = html.includes("React diagnosis interface")
+    || html.includes("Web & mobile UI");
 
   const failures = Object.entries(checks).filter(([, ok]) => !ok);
   for (const [name, ok] of Object.entries(checks)) {

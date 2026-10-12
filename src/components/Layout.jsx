@@ -1,6 +1,7 @@
 import Navbar from "./Navbar";
 import Footer from "./Footer";
 import ScrollManager from "./ScrollManager";
+import AssistantLauncher from "./AssistantLauncher";
 
 export default function Layout({ children }) {
   return (
@@ -17,6 +18,7 @@ export default function Layout({ children }) {
         {children}
       </main>
       <Footer />
+      <AssistantLauncher />
     </div>
   );
 }
