@@ -12,6 +12,11 @@ import TechMarquee from "../components/TechMarquee";
  */
 const stats = [
   {
+    value: 251,
+    label: "commits to a live SaaS",
+    note: "top contributor on a multi-tenant school platform, in four weeks",
+  },
+  {
     value: projects.length,
     label: "case studies",
     note: "each with the problem, my role and the result",
@@ -35,7 +40,7 @@ export default function Proof() {
     <section aria-label="At a glance" className="border-t border-line">
       <div className="container-page">
         <Reveal>
-          <dl className="grid gap-8 py-12 sm:grid-cols-3 md:py-16">
+          <dl className="grid gap-8 py-12 sm:grid-cols-2 md:py-16 lg:grid-cols-4">
             {stats.map((stat) => (
               <div key={stat.label}>
                 <dd className="text-[clamp(2rem,4vw,2.75rem)] leading-none font-semibold tracking-[-0.03em] text-ink">

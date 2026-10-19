@@ -18,11 +18,12 @@ const SERVICE_LABELS = {
   "data-pipelines": "Data pipelines & analysis",
   dashboards: "Dashboards & reporting",
   "ml-apis": "ML-backed APIs & app features",
+  saas: "SaaS platforms & business apps",
   other: "Something else",
 };
 
 /** Re-check everything the browser checked. Client-side validation is a convenience, not a guard. */
-function validate(body) {
+export function validate(body) {
   const name = String(body.name || "").trim();
   const email = String(body.email || "").trim();
   const service = String(body.service || "").trim();

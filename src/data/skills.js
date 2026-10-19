@@ -9,7 +9,7 @@ export const skillGroups = [
   },
   {
     title: "Apps & APIs",
-    items: ["FastAPI", "REST APIs", "Flutter", "Dart", "React", "Tailwind CSS"],
+    items: ["TypeScript", "NestJS", "Next.js", "React", "FastAPI", "REST APIs", "zod", "Flutter", "Dart", "Tailwind CSS"],
   },
   {
     title: "BI",
@@ -17,10 +17,10 @@ export const skillGroups = [
   },
   {
     title: "Databases",
-    items: ["MySQL", "PostgreSQL"],
+    items: ["PostgreSQL", "Row-level security", "Drizzle ORM", "MySQL", "Redis"],
   },
   {
     title: "Tools & cloud",
-    items: ["Git", "GitHub Actions", "pytest", "Docker", "AWS (EC2, S3)"],
+    items: ["Git", "GitHub Actions", "pytest", "Vitest", "Playwright", "Docker", "BullMQ", "AWS (EC2, S3)"],
   },
 ];

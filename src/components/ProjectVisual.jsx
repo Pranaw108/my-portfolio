@@ -61,6 +61,46 @@ function DashboardShot({ project }) {
   );
 }
 
+/** A web product in a browser frame, with a second screen layered over the corner. */
+function ProductShot({ project }) {
+  const { image, inset } = project;
+  return (
+    <div className="relative flex h-full min-h-64 items-center overflow-hidden bg-[#14112b] p-5 sm:min-h-96 sm:p-10 sm:pb-16">
+      <div className="absolute inset-0 bg-[radial-gradient(65%_60%_at_20%_0%,rgb(124_92_255/0.35),transparent)]" aria-hidden="true" />
+      <div className="absolute inset-0 bg-[radial-gradient(45%_45%_at_100%_100%,rgb(56_140_255/0.22),transparent)]" aria-hidden="true" />
+      <div className="relative w-full overflow-hidden rounded-xl bg-[#f7f7fb] shadow-[0_30px_60px_-24px_rgb(0_0_0/0.8)] ring-1 ring-white/10 transition-transform duration-700 ease-out-expo group-hover:-translate-y-1">
+        <div className="flex items-center gap-1.5 border-b border-black/5 bg-white px-3 py-2" aria-hidden="true">
+          <span className="size-2 rounded-full bg-[#ff5f57]" />
+          <span className="size-2 rounded-full bg-[#febc2e]" />
+          <span className="size-2 rounded-full bg-[#28c840]" />
+        </div>
+        <img
+          src={image.src}
+          srcSet={image.srcSet}
+          sizes="(min-width: 1024px) 640px, 92vw"
+          width={image.w}
+          height={image.h}
+          alt={image.alt}
+          loading="lazy"
+          decoding="async"
+          className="w-full"
+        />
+      </div>
+      {inset && (
+        <img
+          src={inset.src}
+          width={inset.w}
+          height={inset.h}
+          alt=""
+          loading="lazy"
+          decoding="async"
+          className="absolute right-4 bottom-4 hidden w-[42%] rounded-lg shadow-[0_24px_48px_-16px_rgb(0_0_0/0.75)] ring-1 ring-white/15 transition-transform duration-700 ease-out-expo group-hover:-translate-y-2 group-hover:-translate-x-1 sm:block"
+        />
+      )}
+    </div>
+  );
+}
+
 function HeatmapPanel({ project }) {
   return (
     <div className="flex h-full min-h-64 items-center bg-bg-soft p-5 sm:min-h-96 sm:p-10">
@@ -84,6 +124,7 @@ function SourceBiasPanel({ project }) {
 const visuals = {
   phones: PhoneStack,
   dashboard: DashboardShot,
+  product: ProductShot,
   heatmap: HeatmapPanel,
   sourceBias: SourceBiasPanel,
 };

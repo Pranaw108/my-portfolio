@@ -6,7 +6,8 @@
 //
 // Run: npm run check:api
 
-import handler from "../api/inquiry.js";
+import handler, { validate } from "../api/inquiry.js";
+import { services } from "../src/data/services.js";
 
 /** Minimal stand-in for Vercel's response object. */
 function mockResponse() {
@@ -63,6 +64,14 @@ process.env.RESEND_API_KEY = "";
 process.env.INQUIRY_TO = "";
 
 let failed = 0;
+
+// The form lists every service in data/services.js; the API keeps its own list, so they must agree.
+for (const service of services) {
+  const { error } = validate({ ...validBody, service: service.id });
+  const ok = !error;
+  if (!ok) failed++;
+  console.log(`${ok ? "PASS" : "FAIL"}  form service "${service.id}" accepted${ok ? "" : ` — ${error}`}`);
+}
 for (const [name, run, expected] of cases) {
   // Validation cases need config present so they are not short-circuited by the 503.
   const needsConfig = expected === 400;
@@ -86,5 +95,6 @@ for (const [name, run, expected] of cases) {
   }
 }
 
-console.log(`\n${cases.length - failed} / ${cases.length} passed`);
+const total = cases.length + services.length;
+console.log(`\n${total - failed} / ${total} passed`);
 process.exitCode = failed ? 1 : 0;

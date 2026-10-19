@@ -43,6 +43,7 @@ try {
     "form submit button rendered": html.includes("Send message"),
     "form has honeypot": html.includes('name="company"'),
     "case study links wired": html.includes('href="/work/audio-recommender"'),
+    "featured SaaS case study linked": html.includes('href="/work/school-erp-saas"') && has("Featured"),
     "services numbered 01": /01<\/span>[\s\S]{0,160}What I can build/.test(html),
     // Section numbers are asserted below, derived from sections.js rather than
     // hardcoded — adding a section used to break this test.

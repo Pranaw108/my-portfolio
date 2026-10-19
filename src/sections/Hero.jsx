@@ -64,9 +64,9 @@ export default function Hero() {
               {...fadeUp(0.4)}
               className="mt-6 max-w-2xl text-[clamp(1.2rem,2.3vw,1.65rem)] leading-snug tracking-[-0.015em] text-ink-soft text-balance"
             >
-              AI/ML Engineer <span className="font-serif text-[1.12em] text-accent italic">and</span> Data Scientist
+              AI/ML Engineer <span className="font-serif text-[1.12em] text-accent italic">and</span> Full-stack Developer
               <span className="mt-1 block text-[0.72em] tracking-normal text-muted">
-                Recommender systems · Python · FastAPI · Flutter
+                Recommender systems · Multi-tenant SaaS · Python · TypeScript
               </span>
             </m.p>
 

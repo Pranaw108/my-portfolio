@@ -5,11 +5,7 @@ import SectionHeading from "../components/SectionHeading";
 import ProjectCard from "../components/ProjectCard";
 import { sectionIndex } from "../data/sections";
 import { EASE } from "../lib/motion";
-
-const NUMBER_WORDS = ["No", "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine"];
-
-/** Spell the count, so the heading copy can never disagree with the data. */
-const countWord = (n) => NUMBER_WORDS[n] ?? String(n);
+import { countWord } from "../lib/words";
 
 const ALL = "All";
 
@@ -29,8 +25,8 @@ export default function Work() {
     <section id="work" aria-labelledby="work-title" className="py-24 md:py-32">
       <div className="container-page">
         <SectionHeading index={sectionIndex("work")} titleId="work-title" eyebrow="Selected work" title="From raw data to something people can use.">
-          {countWord(projects.length)} case studies across machine learning, analytics engineering and business
-          intelligence — each with the problem, my role and what came out of it.
+          {countWord(projects.length)} case studies across full-stack SaaS, machine learning, analytics engineering and
+          business intelligence — each with the problem, my role and what came out of it.
         </SectionHeading>
 
         {showFilters && (

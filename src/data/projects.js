@@ -2,6 +2,114 @@
 
 export const projects = [
   {
+    // Client project: the client and product are deliberately not named. Screens are
+    // from a demo school with made-up data. Platform-wide figures are labelled as such;
+    // only the commit count is mine alone (git log on main, 21 Sep – 19 Oct 2026).
+    slug: "school-erp-saas",
+    featured: true,
+    categories: ["Full-stack", "Apps"],
+    title: "Multi-tenant School ERP",
+    kind: "Full-stack SaaS · TypeScript",
+    year: "2026",
+    summary:
+      "A school management platform sold to many schools from one deployment — fees and online payments, attendance, exams, timetables, transport tracking and role dashboards for admins, teachers, parents and students.",
+    problem:
+      "Every school on the platform shares the same servers and database, so one school must never see another's data — not through a bug, a forgotten filter or a crafted request. Each school also brings its own payment gateway, GPS provider and other systems, and needs to connect them from the app itself, without a developer.",
+    role: "Full-stack engineer at Vibe6 Digital in a small team — I built fees and payments, the integrations hub, transport, attendance, exam marking, the CRM and the role dashboards",
+    stack: [
+      "TypeScript",
+      "NestJS",
+      "Next.js",
+      "PostgreSQL",
+      "Row-level security",
+      "React",
+      "Fastify",
+      "Drizzle ORM",
+      "zod",
+      "Redis",
+      "BullMQ",
+      "Vitest",
+      "Playwright",
+      "Docker",
+    ],
+    source: null,
+    sourceLabel: "Private client repo",
+    visual: "product",
+    image: {
+      src: "/images/school-erp-parent-home-1400.webp",
+      srcSet: "/images/school-erp-parent-home-800.webp 800w, /images/school-erp-parent-home-1400.webp 1400w",
+      w: 1400,
+      h: 875,
+      alt: "Parent home screen: a child's attendance ring, today's timetable, homework, latest result, fees due and the school bus card",
+    },
+    inset: {
+      src: "/images/school-erp-integrations-800.webp",
+      w: 800,
+      h: 500,
+    },
+    highlight: {
+      value: "251 commits",
+      label: "in four weeks — the most of anyone on the team, 43% of everything merged to main",
+    },
+    results: [
+      {
+        value: "138 tables",
+        label: "Every school-owned table guarded by forced Postgres row-level security, checked by isolation tests (platform-wide)",
+      },
+      {
+        value: "2,134 tests",
+        label: "Automated test cases across unit, integration and database-isolation suites (whole team)",
+      },
+      {
+        value: "62 migrations",
+        label: "Schema changes shipped through versioned migrations, never by hand, across 26 API modules (platform-wide)",
+      },
+    ],
+    approach: [
+      {
+        title: "Isolate schools in the database, not just the code",
+        body: "Every school-owned table has forced row-level security, and the app connects with a role that cannot bypass it. A missed filter in a query returns nothing instead of another school's data.",
+      },
+      {
+        title: "One contract for both ends",
+        body: "Request and response shapes are zod schemas in a shared package. The API validates against them and the web app is typed from them, so the two cannot quietly drift apart.",
+      },
+      {
+        title: "Let a school connect its own systems",
+        body: "An integrations hub where an admin picks a provider, enters its details, tests the connection and switches it on. Credentials are encrypted with AES-256-GCM, and every outbound call goes through a guard that refuses private and internal addresses.",
+      },
+      {
+        title: "Payments that cannot double-count",
+        body: "Each school's own gateway takes its fee payments. An order is always confirmed with the gateway that opened it, even if the school switches gateways mid-payment, and a sandbox lets a school rehearse the whole flow.",
+      },
+      {
+        title: "Signed incoming webhooks",
+        body: "Other systems can send events to a per-school address. Each one is checked against an HMAC-SHA256 signature, repeats are recognised by a unique index, and refused events are still logged with their reason.",
+      },
+      {
+        title: "Prove the tests can fail",
+        body: "For each security guard I broke it on purpose and checked that a test went red for the right reason. That is how I found a payment could be confirmed with the wrong gateway after a switch, which now has its own test.",
+      },
+    ],
+    features: [
+      "Role dashboards for admins, teachers, parents and students",
+      "Fees, invoices and online payments through each school's own gateway",
+      "Live school-bus tracking from the school's GPS provider",
+      "Attendance for students and staff, with holiday rules per class",
+      "Exams, online tests and a marking queue for teachers",
+      "Command palette, dark mode and a mobile app for parents",
+    ],
+    galleryTitle: "Screens",
+    gallery: [
+      { src: "/images/school-erp-parent-home-1400.webp", caption: "Parent home — attendance, timetable, results, fees and the school bus", w: 1400, h: 875 },
+      { src: "/images/school-erp-teacher-home-1400.webp", caption: "Teacher home — today's lessons and everything waiting to be marked", w: 1400, h: 875 },
+      { src: "/images/school-erp-integrations-1400.webp", caption: "Integrations hub — payments, GPS, custom APIs and webhooks a school sets up itself", w: 1400, h: 875 },
+      { src: "/images/school-erp-transport-tracking-1400.webp", caption: "Transport — live bus positions from the school's GPS provider", w: 1400, h: 875 },
+      { src: "/images/school-erp-grades-1400.webp", caption: "Classes and sections — seats, class teachers and gaps at a glance", w: 1400, h: 875 },
+    ],
+    galleryNote: "Demo school with made-up data · client and product name withheld.",
+  },
+  {
     // Client project: the platform is deliberately not named anywhere on the site.
     slug: "audio-recommender",
     categories: ["Machine learning", "Apps"],
@@ -224,16 +332,16 @@ export const projects = [
   },
   {
     slug: "vayu-air-quality",
-    categories: ["Machine learning", "Data engineering"],
+    categories: ["Machine learning", "Data engineering", "Apps"],
     title: "Vayu — Air Quality Forecasting",
-    kind: "Machine learning · Data engineering",
+    kind: "Machine learning · Data engineering · API & web UI",
     year: "2026",
     summary:
       "A forecasting service built on India's full CPCB monitoring archive: 71.8 million station readings turned into a 6-hour PM2.5 forecast that beats the standard baseline by 35%.",
     problem:
       "India has over 500 air-quality monitoring stations, but the archive arrives as 546 CSV files with 113 different header layouts, 84 stations sharing one placeholder coordinate, and no AQI column at all. Before anyone can forecast air quality, the data has to be made trustworthy — and then the forecast has to be proven better than simply assuming tomorrow looks like today.",
-    role: "Solo — data engineering, the CPCB AQI engine, feature design, modelling and honest evaluation",
-    stack: ["Python", "DuckDB", "Parquet", "LightGBM", "scikit-learn", "pandas", "pytest", "FastAPI"],
+    role: "Solo — data engineering, the CPCB AQI engine, feature design, modelling, honest evaluation, the API and the map interface",
+    stack: ["Python", "DuckDB", "Parquet", "LightGBM", "pandas", "pytest", "FastAPI", "React", "MapLibre", "Tailwind", "Docker"],
     source: "https://github.com/Pranaw108/vayu-aqi",
     visual: "heatmap",
     highlight: {
@@ -243,7 +351,7 @@ export const projects = [
     results: [
       {
         value: "+35.0%",
-        label: "Lower error than persistence at +6h (MAE 41.4 vs 63.7 µg/m³) across 12 rolling-origin folds",
+        label: "Lower error than persistence at +6h (MAE 41.4 vs 63.7 µg/m³) across 3 rolling-origin folds",
       },
       {
         value: "66.5% / 73.5%",

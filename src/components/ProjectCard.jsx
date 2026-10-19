@@ -26,6 +26,11 @@ export default function ProjectCard({ project, index }) {
         <p className="eyebrow flex flex-wrap items-center gap-x-3 gap-y-1">
           <span className="text-accent">0{index + 1}</span>
           <span>{project.kind}</span>
+          {project.featured && (
+            <span className="rounded-full bg-accent-soft px-2.5 py-0.5 text-[0.68rem] font-semibold tracking-[0.08em] text-accent">
+              Featured
+            </span>
+          )}
         </p>
 
         <h3 className="mt-4 text-[1.85rem] leading-[1.1] font-semibold tracking-[-0.03em] text-balance">

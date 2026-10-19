@@ -86,6 +86,27 @@ export const services = [
       metric: "Python ranker ported to Dart, verified against golden fixtures",
     },
   },
+  {
+    id: "saas",
+    icon: "Building2",
+    tint: "from-[#4b3fc4] to-[#7c5cff]",
+    title: "SaaS platforms & business apps",
+    tagline: "One product, many customers, no data crossing between them.",
+    problem:
+      "You sell one product to many organisations, and every new customer brings another payment gateway, another set of roles and another way for data to leak.",
+    deliverables: [
+      "Customer isolation enforced in the database, not just in code",
+      "Role-based dashboards and permissions for each kind of user",
+      "Payment, GPS and webhook integrations a customer can set up alone",
+      "Typed API contracts, migrations and automated tests from day one",
+    ],
+    stack: ["TypeScript", "NestJS", "Next.js", "PostgreSQL"],
+    evidence: {
+      slug: "school-erp-saas",
+      label: "Multi-tenant School ERP",
+      metric: "251 commits to a live multi-tenant platform in four weeks",
+    },
+  },
 ];
 
 // How an engagement actually runs. Deliberately four steps — a longer list

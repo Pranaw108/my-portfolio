@@ -1,12 +1,13 @@
-import { ArrowRight, BarChart3, Boxes, Check, Database, Sparkles } from "lucide-react";
+import { ArrowRight, BarChart3, Boxes, Building2, Check, Database, Sparkles } from "lucide-react";
 import { Link } from "react-router-dom";
 import { processSteps, services } from "../data/services";
 import { sectionIndex } from "../data/sections";
 import Reveal from "../components/Reveal";
 import SectionHeading from "../components/SectionHeading";
 import Tag from "../components/Tag";
+import { countWord } from "../lib/words";
 
-const ICONS = { Sparkles, Database, BarChart3, Boxes };
+const ICONS = { Sparkles, Database, BarChart3, Boxes, Building2 };
 
 function ServiceCard({ service }) {
   const Icon = ICONS[service.icon] ?? Sparkles;
@@ -75,13 +76,17 @@ export default function Services() {
           title="Problems I can take off your plate."
           titleId="services-title"
         >
-          Four things I have actually shipped. Each one links to the case study behind it, so you can check the
+          {countWord(services.length)} things I have actually shipped. Each one links to the case study behind it, so you can check the
           claim rather than take my word for it.
         </SectionHeading>
 
         <div className="mt-14 grid gap-5 md:mt-16 lg:grid-cols-2">
           {services.map((service, i) => (
-            <Reveal key={service.id} delay={i * 0.06}>
+            <Reveal
+              key={service.id}
+              delay={i * 0.06}
+              className={services.length % 2 === 1 && i === services.length - 1 ? "lg:col-span-2" : undefined}
+            >
               <ServiceCard service={service} />
             </Reveal>
           ))}

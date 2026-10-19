@@ -1,10 +1,10 @@
 export const profile = {
   name: "Pranaw Gautam",
-  roles: ["AI/ML Engineer", "Data Scientist"],
+  roles: ["AI/ML Engineer", "Full-stack Developer"],
   currentRole: "AI/ML Engineer",
   currentCompany: "Vibe6 Digital",
   intro:
-    "I build recommendation systems and data pipelines in Python and SQL, prove them on held-out data, and ship them through FastAPI services and Flutter apps.",
+    "I build machine-learning features and the products around them — recommenders proven on held-out data, and a multi-tenant SaaS platform in TypeScript, NestJS and Postgres that real schools run on.",
   location: "Indore, Madhya Pradesh, India",
   locationShort: "Indore, India",
   email: "pranawgautam@gmail.com",
@@ -23,8 +23,8 @@ export const profile = {
 
 export const about = [
   "Most of what I build starts with messy data — cleaning it, modeling it and turning it into something a person can act on: a dashboard, a REST API, or a ranked row on a phone screen.",
-  "I'm an AI/ML Engineer at Vibe6 Digital in Indore, working on the recommendation system for a client's audio-storytelling app. Before that I spent six months as a Data Science Intern at Shanti Infosoft, building preprocessing pipelines, running exploratory analysis and hardening the Python code the team relied on.",
-  "I care about honest evaluation — baselines, held-out test data and significance tests before calling something better — and about code that is tested, documented and easy to hand over.",
+  "I'm an AI/ML Engineer at Vibe6 Digital in Indore. I built the recommendation system for a client's audio-storytelling app, and I'm now one of the main engineers on a multi-tenant school management platform — fees and payments, integrations, transport and the dashboards each role sees. Before that I spent six months as a Data Science Intern at Shanti Infosoft, building preprocessing pipelines, running exploratory analysis and hardening the Python code the team relied on.",
+  "I care about honest evaluation — baselines, held-out test data and significance tests before calling something better — and about software that is secure by default, tested until the tests can fail, and easy to hand over.",
 ];
 
 export const education = [

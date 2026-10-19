@@ -26,7 +26,7 @@ function Gallery({ project }) {
     <section className="container-page mt-24 md:mt-32" aria-labelledby="gallery-title">
       <Reveal className="flex flex-wrap items-baseline justify-between gap-2">
         <h2 id="gallery-title" className="text-2xl font-semibold tracking-[-0.02em]">
-          {isPhone ? "Screens" : "Report pages"}
+          {project.galleryTitle ?? (isPhone ? "Screens" : "Report pages")}
         </h2>
         {project.galleryNote && <p className="font-mono text-xs text-muted">{project.galleryNote}</p>}
       </Reveal>
