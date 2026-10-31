@@ -3,8 +3,8 @@
 
 export const faqs = [
   {
-    q: "Are you available for freelance work?",
-    a: "I work full-time as an AI/ML Engineer at Vibe6 Digital, so I take on a small number of projects alongside it. Tell me your timeline in the form and I'll be straight with you about whether I can fit it.",
+    q: "Are you open to new roles or freelance work?",
+    a: "Both. I work full-time as an AI/ML Engineer at Vibe6 Digital and I'm open to full-time AI/ML and full-stack roles — email or my résumé is the quickest route for that. Alongside my job I take on a small number of freelance projects; tell me your timeline in the form and I'll be straight with you about whether I can fit it.",
   },
   {
     q: "What kind of projects are a good fit?",

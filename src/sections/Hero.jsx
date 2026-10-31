@@ -51,10 +51,9 @@ export default function Hero() {
                 <span className="animate-ping-soft absolute inline-flex size-full rounded-full bg-emerald-500" />
                 <span className="relative inline-flex size-2 rounded-full bg-emerald-500" />
               </span>
-              <span>
-                {profile.currentRole} at {profile.currentCompany}
-                <span className="hidden text-muted sm:inline"> · {profile.availability}</span>
-              </span>
+              {/* Current job sits in the facts strip below; the pill is about what's next. */}
+              <span className="sm:hidden">{profile.availabilityShort}</span>
+              <span className="hidden sm:inline">{profile.availability}</span>
             </m.p>
 
             <h1 className="mt-6 text-[clamp(3.5rem,11vw,8rem)] leading-[0.88] font-semibold tracking-[-0.055em]">

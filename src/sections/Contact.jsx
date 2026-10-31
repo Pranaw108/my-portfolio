@@ -32,8 +32,8 @@ export default function ContactPanel() {
             <span className="font-serif font-normal tracking-[-0.02em] text-[#ff8a5c] italic">That works too.</span>
           </h2>
           <p className="mt-6 max-w-xl text-lg leading-relaxed text-[#b9b4a8] text-pretty">
-            The form above reaches me fastest, but a direct email is just as good — and if you're hiring rather than
-            commissioning, this is the quickest route.
+            The form above reaches me fastest, but a direct email is just as good — and if you're hiring for a full-time role,
+            this is the quickest route.
           </p>
 
           <div className="mt-10 flex flex-wrap items-center gap-x-4 gap-y-3">

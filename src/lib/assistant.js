@@ -147,9 +147,9 @@ const INTENTS = [
   },
   {
     id: "services",
-    keywords: ["service", "services", "hire", "offer", "help", "build for", "freelance", "available", "availability", "work together"],
+    keywords: ["service", "services", "hire", "hiring", "full-time", "open to", "offer", "help", "build for", "freelance", "available", "availability", "work together"],
     answer: () => ({
-      text: `Four things he builds, each backed by a case study:\n\n${services
+      text: `${services.length} things he builds, each backed by a case study:\n\n${services
         .map((s) => `**${s.title}** — ${s.tagline}`)
         .join("\n")}\n\n${faqs[0].a}`,
       chips: ["Start a project", "Show projects", "Pricing"],
