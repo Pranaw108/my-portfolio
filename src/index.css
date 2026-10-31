@@ -222,6 +222,11 @@
     scroll-behavior: auto !important;
   }
 
+  /* A one-shot ping would end parked over its icon, so drop it entirely. */
+  .animate-ping-soft {
+    display: none;
+  }
+
   /* A 0.01ms marquee would strobe, so stop it rather than speed it up. */
   .animate-marquee {
     animation: none !important;

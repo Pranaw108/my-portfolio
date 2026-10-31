@@ -86,14 +86,15 @@ export default function AssistantLauncher() {
         onClick={() => setOpen(true)}
         aria-haspopup="dialog"
         aria-expanded={open}
-        className="group/ask fixed right-4 bottom-4 z-50 flex cursor-pointer items-center gap-2.5 rounded-full bg-ink py-3 pr-5 pl-3 text-bg shadow-lift transition-[transform,background-color] duration-300 ease-out-expo hover:-translate-y-0.5 hover:bg-ink-soft active:scale-95 sm:right-6 sm:bottom-6"
+        className="group/ask fixed right-4 bottom-4 z-50 flex cursor-pointer items-center gap-2.5 rounded-full bg-ink p-3 text-bg sm:py-3 sm:pr-5 sm:pl-3 shadow-lift transition-[transform,background-color] duration-300 ease-out-expo hover:-translate-y-0.5 hover:bg-ink-soft active:scale-95 sm:right-6 sm:bottom-6"
       >
         <span className="relative grid size-8 place-items-center rounded-full bg-accent">
           <MessageCircleQuestion className="size-4" aria-hidden="true" />
           {/* A quiet pulse the first time, so the button is noticed without nagging. */}
           <span className="absolute inset-0 animate-ping-soft rounded-full bg-accent" aria-hidden="true" />
         </span>
-        <span className="text-[0.92rem] font-medium whitespace-nowrap">Ask about Pranaw</span>
+        {/* Icon-only on phones, so it never covers the hero's buttons. */}
+        <span className="sr-only text-[0.92rem] font-medium whitespace-nowrap sm:not-sr-only">Ask about Pranaw</span>
       </button>
 
       <AnimatePresence>
