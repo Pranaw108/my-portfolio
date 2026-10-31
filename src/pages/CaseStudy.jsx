@@ -21,6 +21,8 @@ function Block({ title, children }) {
 function Gallery({ project }) {
   if (!project.gallery?.length || project.visual === "heatmap") return null;
   const isPhone = project.visual === "phones";
+  // Three or more wide screens: lead with one, pair the rest, so the page stays scannable.
+  const paired = !isPhone && project.gallery.length > 2;
 
   return (
     <section className="container-page mt-24 md:mt-32" aria-labelledby="gallery-title">
@@ -31,24 +33,36 @@ function Gallery({ project }) {
         {project.galleryNote && <p className="font-mono text-xs text-muted">{project.galleryNote}</p>}
       </Reveal>
 
-      <ul className={`mt-8 grid gap-6 ${isPhone ? "grid-cols-2 sm:grid-cols-3 lg:gap-10" : "gap-10"}`}>
+      <ul
+        className={`mt-8 grid gap-6 ${
+          isPhone ? "grid-cols-2 sm:grid-cols-3 lg:gap-10" : paired ? "grid-cols-1 md:grid-cols-2 md:gap-8" : "gap-10"
+        }`}
+      >
         {project.gallery.map((shot, i) => (
-          <Reveal as="li" key={shot.src} delay={isPhone ? (i % 3) * 0.06 : 0}>
+          <Reveal
+            as="li"
+            key={shot.src}
+            delay={isPhone ? (i % 3) * 0.06 : paired ? (i % 2) * 0.06 : 0}
+            className={`min-w-0 ${paired && i === 0 ? "md:col-span-2" : ""}`}
+          >
             <figure>
               <div
                 className={`overflow-hidden border border-line bg-bg-soft ${
                   isPhone ? "mx-auto max-w-[260px] rounded-[1.75rem]" : "rounded-2xl sm:rounded-3xl"
                 }`}
               >
-                <img
-                  src={shot.src}
-                  width={shot.w}
-                  height={shot.h}
-                  alt={`${project.title}: ${shot.caption}`}
-                  loading="lazy"
-                  decoding="async"
-                  className="w-full"
-                />
+                {/* Opens the full-size image, so a half-width screenshot can still be read. */}
+                <a href={shot.src} target="_blank" rel="noopener noreferrer" className="group/shot block cursor-zoom-in">
+                  <img
+                    src={shot.src}
+                    width={shot.w}
+                    height={shot.h}
+                    alt={`${project.title}: ${shot.caption}`}
+                    loading="lazy"
+                    decoding="async"
+                    className="w-full transition-transform duration-700 ease-out-expo group-hover/shot:scale-[1.015]"
+                  />
+                </a>
               </div>
               <figcaption className={`mt-3 text-sm text-muted ${isPhone ? "text-center" : ""}`}>{shot.caption}</figcaption>
             </figure>
