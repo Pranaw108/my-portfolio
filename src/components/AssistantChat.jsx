@@ -1,13 +1,10 @@
 import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
-import { AnimatePresence, m } from "framer-motion";
-import { ArrowUpRight, Bot, Send, Sparkles, X } from "lucide-react";
-import { OPENING, ask } from "../lib/assistant";
+import { AnimatePresence, m, useReducedMotion } from "framer-motion";
+import { ArrowRight, ArrowUpRight, Bot, RotateCcw, Send, Sparkles, X } from "lucide-react";
+import { resetConversation, sendQuestion, useConversation } from "../lib/conversation";
 import { profile } from "../data/profile";
 import { EASE } from "../lib/motion";
-
-// Long enough to read as thinking, short enough not to feel like waiting.
-const REPLY_DELAY_MS = 420;
 
 /** Renders **bold** and _italic_. The answers are ours, so no HTML is parsed. */
 function RichText({ text }) {
@@ -30,30 +27,36 @@ function RichText({ text }) {
   );
 }
 
-function AnswerLink({ link }) {
+/** Links an answer to where it came from. In the dialog, following one closes it. */
+function AnswerLink({ link, onNavigate }) {
   const classes =
     "inline-flex items-center gap-1 rounded-full border border-line-strong px-3 py-1 text-[0.8rem] font-medium text-accent transition-colors hover:border-accent";
   if (link.to) {
     return (
-      <Link to={link.to} className={classes}>
+      <Link to={link.to} onClick={onNavigate} className={classes}>
         {link.label}
-        <ArrowUpRight className="size-3" aria-hidden="true" />
+        <ArrowRight className="size-3" aria-hidden="true" />
       </Link>
     );
   }
   return (
-    <a href={link.href} target="_blank" rel="noopener noreferrer" className={classes}>
+    <a
+      href={link.href}
+      {...(!link.href.startsWith("mailto:") && { target: "_blank", rel: "noopener noreferrer" })}
+      className={classes}
+    >
       {link.label}
       <ArrowUpRight className="size-3" aria-hidden="true" />
     </a>
   );
 }
 
-function Bubble({ message }) {
+function Bubble({ message, onNavigate }) {
+  const reduce = useReducedMotion();
   const fromVisitor = message.from === "visitor";
   return (
     <m.div
-      initial={{ opacity: 0, y: 8 }}
+      initial={reduce ? false : { opacity: 0, y: 8 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.35, ease: EASE }}
       className={`flex gap-3 ${fromVisitor ? "justify-end" : ""}`}
@@ -65,14 +68,18 @@ function Bubble({ message }) {
       )}
       <div
         className={`max-w-[85%] rounded-2xl px-4 py-3 text-[0.95rem] leading-relaxed ${
-          fromVisitor ? "bg-ink text-bg" : "border border-line bg-surface text-ink-soft"
+          fromVisitor
+            ? "bg-ink text-bg"
+            : message.fallback
+              ? "border border-dashed border-line-strong bg-bg-soft text-ink-soft"
+              : "border border-line bg-surface text-ink-soft"
         }`}
       >
         <RichText text={message.text} />
         {message.links?.length > 0 && (
           <div className="mt-3 flex flex-wrap gap-2">
             {message.links.map((link) => (
-              <AnswerLink key={link.label} link={link} />
+              <AnswerLink key={link.label} link={link} onNavigate={onNavigate} />
             ))}
           </div>
         )}
@@ -88,15 +95,15 @@ function Bubble({ message }) {
  * in one place and stale in the other.
  */
 export default function AssistantChat({ titleId, onClose, autoFocus = false, className = "" }) {
-  const [messages, setMessages] = useState([{ from: "bot", ...OPENING }]);
+  const { messages, thinking } = useConversation();
   const [draft, setDraft] = useState("");
-  const [thinking, setThinking] = useState(false);
   const scroller = useRef(null);
   const input = useRef(null);
-  const timer = useRef(null);
 
   const latest = messages[messages.length - 1];
-  const chips = latest.from === "bot" ? (latest.chips ?? []) : [];
+  const fromBot = latest.from === "bot" && !thinking;
+  // Opening shows grouped starters; every later answer offers its own follow-ups.
+  const chipGroups = fromBot ? (latest.chipGroups ?? (latest.chips?.length ? [{ chips: latest.chips }] : [])) : [];
 
   // Keep the newest message in view without moving the page itself.
   useEffect(() => {
@@ -106,21 +113,12 @@ export default function AssistantChat({ titleId, onClose, autoFocus = false, cla
 
   useEffect(() => {
     if (autoFocus) input.current?.focus();
-    return () => clearTimeout(timer.current);
   }, [autoFocus]);
 
   function send(question) {
-    const text = question.trim();
-    if (!text || thinking) return;
-
-    setMessages((previous) => [...previous, { from: "visitor", text }]);
+    if (!question.trim() || thinking) return;
+    sendQuestion(question);
     setDraft("");
-    setThinking(true);
-
-    timer.current = setTimeout(() => {
-      setMessages((previous) => [...previous, { from: "bot", ...ask(text) }]);
-      setThinking(false);
-    }, REPLY_DELAY_MS);
   }
 
   return (
@@ -138,6 +136,18 @@ export default function AssistantChat({ titleId, onClose, autoFocus = false, cla
             Answers from this site's data
           </p>
         </div>
+        {messages.length > 1 && (
+          <button
+            type="button"
+            onClick={resetConversation}
+            disabled={thinking}
+            aria-label="Start the conversation over"
+            title="Start over"
+            className="grid size-9 place-items-center rounded-full text-muted transition-colors hover:bg-bg-soft hover:text-ink"
+          >
+            <RotateCcw className="size-4" aria-hidden="true" />
+          </button>
+        )}
         {onClose ? (
           <button
             type="button"
@@ -161,16 +171,17 @@ export default function AssistantChat({ titleId, onClose, autoFocus = false, cla
       >
         <AnimatePresence initial={false}>
           {messages.map((message, i) => (
-            <Bubble key={i} message={message} />
+            <Bubble key={i} message={message} onNavigate={onClose} />
           ))}
         </AnimatePresence>
 
         {thinking && (
-          <div className="flex gap-3" aria-hidden="true">
-            <span className="mt-0.5 grid size-8 shrink-0 place-items-center rounded-xl bg-accent-soft text-accent">
+          <div className="flex gap-3">
+            <span className="sr-only" role="status">Looking that up…</span>
+            <span aria-hidden="true" className="mt-0.5 grid size-8 shrink-0 place-items-center rounded-xl bg-accent-soft text-accent">
               <Bot className="size-4" />
             </span>
-            <span className="flex items-center gap-1 rounded-2xl border border-line bg-surface px-4 py-3">
+            <span aria-hidden="true" className="flex items-center gap-1 rounded-2xl border border-line bg-surface px-4 py-3">
               {[0, 1, 2].map((dot) => (
                 <span
                   key={dot}
@@ -183,17 +194,22 @@ export default function AssistantChat({ titleId, onClose, autoFocus = false, cla
         )}
       </div>
 
-      {chips.length > 0 && (
-        <div className="flex flex-wrap gap-2 border-t border-line px-5 pt-4">
-          {chips.map((chip) => (
-            <button
-              key={chip}
-              type="button"
-              onClick={() => send(chip)}
-              className="cursor-pointer rounded-full border border-line-strong px-3 py-1.5 text-[0.82rem] text-ink-soft transition-colors hover:border-ink hover:text-ink"
-            >
-              {chip}
-            </button>
+      {chipGroups.length > 0 && (
+        <div className="space-y-2.5 border-t border-line px-5 pt-4" aria-label="Suggested questions" role="group">
+          {chipGroups.map((group, g) => (
+            <div key={group.label ?? g} className="flex flex-wrap items-center gap-2">
+              {group.label && <span className="w-full font-mono text-[0.66rem] tracking-[0.12em] text-muted uppercase sm:w-20">{group.label}</span>}
+              {group.chips.map((chip) => (
+                <button
+                  key={chip}
+                  type="button"
+                  onClick={() => send(chip)}
+                  className="rounded-full border border-line-strong px-3 py-1.5 text-[0.82rem] text-ink-soft transition-[border-color,color,translate] duration-300 hover:-translate-y-0.5 hover:border-accent hover:text-accent"
+                >
+                  {chip}
+                </button>
+              ))}
+            </div>
           ))}
         </div>
       )}

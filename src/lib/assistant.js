@@ -1,5 +1,5 @@
 import { about, education, profile } from "../data/profile";
-import { projects } from "../data/projects";
+import { getCodeLink, projects } from "../data/projects";
 import { skillGroups } from "../data/skills";
 import { experience } from "../data/experience";
 import { services } from "../data/services";
@@ -84,7 +84,8 @@ const INTENTS = [
     keywords: ["who", "about", "yourself", "background", "introduce", "bio", "summary"],
     answer: () => ({
       text: `${profile.name} is an **${profile.currentRole}** at ${profile.currentCompany}, based in ${profile.location}.\n\n${profile.intro}\n\n${about[0]}`,
-      chips: ["What has he built?", "Experience", "Education"],
+      chips: ["What has he built?", "Experience", "Is he available?"],
+      links: [{ label: "About section", to: "/#about" }],
     }),
   },
   {
@@ -93,6 +94,7 @@ const INTENTS = [
     answer: () => ({
       text: `Here is the toolkit, grouped the way he uses it:\n\n${listSkills()}`,
       chips: ["Show projects", "Services", "Experience"],
+      links: [{ label: "See the toolkit", to: "/#skills" }],
     }),
   },
   {
@@ -110,10 +112,16 @@ const INTENTS = [
     id: "experience",
     keywords: ["experience", "job", "jobs", "worked", "employer", "company", "career", "role", "roles"],
     answer: () => ({
+      // Not every job records a location or summary, so only print what exists.
       text: experience
-        .map((job) => `**${job.role}** at ${job.company}\n${job.period} · ${job.location}\n${job.summary}`)
+        .map((job) => {
+          const when = [job.period, job.location].filter(Boolean).join(" · ");
+          const detail = job.summary ?? job.points[0];
+          return `**${job.role}** at ${job.company}\n${when}${detail ? `\n${detail}` : ""}`;
+        })
         .join("\n\n"),
       chips: ["What did he achieve?", "Skills", "Education"],
+      links: [{ label: "Experience section", to: "/#experience" }],
     }),
   },
   {
@@ -125,6 +133,7 @@ const INTENTS = [
         .map((point) => `• ${point}`)
         .join("\n\n")}\n\nHe also reached **${goer.badge}** in ${goer.title}.`,
       chips: ["Show projects", "Credentials"],
+      links: [{ label: "Experience section", to: "/#experience" }],
     }),
   },
   {
@@ -135,6 +144,7 @@ const INTENTS = [
         .map((item) => `**${item.degree}**\n${item.school}, ${item.place}${item.detail ? ` · ${item.detail}` : ""}`)
         .join("\n\n"),
       chips: ["Credentials", "Experience"],
+      links: [{ label: "About section", to: "/#about" }],
     }),
   },
   {
@@ -143,16 +153,21 @@ const INTENTS = [
     answer: () => ({
       text: `**${goer.title}** — ${goer.badge}\n${goer.subtitle}\n\n**${rmat.title}** — ${rmat.issuer}\n\nPlus ${certifications.length} further certifications listed on the site.`,
       chips: ["Education", "Experience"],
+      links: [{ label: "Credentials section", to: "/#credentials" }],
     }),
   },
   {
     id: "services",
-    keywords: ["service", "services", "hire", "hiring", "full-time", "open to", "offer", "help", "build for", "freelance", "available", "availability", "work together"],
+    keywords: ["start a project", "service", "services", "hire", "hiring", "full-time", "open to", "offer", "help", "build for", "freelance", "available", "availability", "work together"],
     answer: () => ({
       text: `${services.length} things he builds, each backed by a case study:\n\n${services
         .map((s) => `**${s.title}** — ${s.tagline}`)
         .join("\n")}\n\n${faqs[0].a}`,
       chips: ["Start a project", "Show projects", "Pricing"],
+      links: [
+        { label: "Services", to: "/#services" },
+        { label: "Open the form", to: "/#contact" },
+      ],
     }),
   },
   {
@@ -164,6 +179,7 @@ const INTENTS = [
       return {
         text: `**${pricing.q}**\n${pricing.a}\n\n**${timeline.q}**\n${timeline.a}`,
         chips: ["Start a project", "Services"],
+        links: [{ label: "Pricing in the FAQ", to: `/#faq-${pricing.slug}` }],
       };
     },
   },
@@ -174,6 +190,7 @@ const INTENTS = [
       text: `**Email** ${profile.email}\n**Phone** ${profile.phone}\n**Location** ${profile.location}\n\nThe form at the bottom of this page reaches him directly, and he replies within a couple of days.`,
       chips: ["Start a project", "Resume"],
       links: [
+        { label: "Open the form", to: "/#contact" },
         { label: "LinkedIn", href: profile.links.linkedin },
         { label: "GitHub", href: profile.links.github },
       ],
@@ -192,7 +209,8 @@ const INTENTS = [
     id: "location",
     keywords: ["where", "location", "based", "remote", "city", "country", "relocate"],
     answer: () => ({
-      text: `He is based in ${profile.location}, and works remotely with clients elsewhere.`,
+      // Only what the site records; remote or relocation terms are his to answer.
+      text: `He is based in ${profile.location}. For questions about remote work or relocating, ask him directly at ${profile.email}.`,
       chips: ["Contact details", "Services"],
     }),
   },
@@ -230,14 +248,19 @@ function projectAnswer(project) {
     chips: ["Show projects", "Tech stack"],
     links: [
       { label: "Read the case study", to: `/work/${project.slug}` },
-      ...(project.source ? [{ label: "Source code", href: project.source }] : []),
+      ...(getCodeLink(project) ? [{ label: "Code on GitHub", href: getCodeLink(project).href }] : []),
     ],
   };
 }
 
 const FALLBACK = {
-  text: `I only answer from what this site actually records, so I would rather not guess at that one.\n\nI can cover his skills, projects, experience, education, services, pricing and contact details. For anything else, ${profile.email} reaches him directly.`,
+  fallback: true,
+  text: `I don't know that one — I only answer from what this site records, so I won't guess.\n\nI can cover his skills, projects, experience, education, services, pricing and contact details. For anything else, ask Pranaw directly.`,
   chips: ["Who is Pranaw?", "Show projects", "Services", "Contact details"],
+  links: [
+    { label: `Email ${profile.name.split(" ")[0]}`, href: `mailto:${profile.email}` },
+    { label: "Open the form", to: "/#contact" },
+  ],
 };
 
 /** Minimum score before an intent is trusted over the fallback. */
@@ -265,4 +288,10 @@ export function ask(question) {
 export const OPENING = {
   text: `Hello. I am a small assistant built from this site's own data — I can tell you about ${profile.name}'s **skills**, **projects**, **experience**, or how to **get in touch**.\n\nI am not a language model, so I will never invent an answer. Ask away.`,
   chips: ["Who is Pranaw?", "Tech stack", "Show projects", "Contact details"],
+  // Starter questions grouped by what a visitor is usually after.
+  chipGroups: [
+    { label: "About him", chips: ["Who is Pranaw?", "Experience", "Education"] },
+    { label: "His work", chips: ["Show projects", "Tech stack", "Services"] },
+    { label: "Hiring", chips: ["Is he available?", "Pricing", "Contact details"] },
+  ],
 };
