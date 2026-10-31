@@ -337,7 +337,7 @@ export const projects = [
     kind: "Machine learning · Data engineering · API & web UI",
     year: "2026",
     summary:
-      "A forecasting service built on India's full CPCB monitoring archive: 71.8 million station readings turned into a 6-hour PM2.5 forecast that beats the standard baseline by 35%.",
+      "A forecasting service built on India's full CPCB monitoring archive: 71.9 million station readings turned into a 6-hour PM2.5 forecast that beats the standard baseline by 35%.",
     problem:
       "India has over 500 air-quality monitoring stations, but the archive arrives as 546 CSV files with 113 different header layouts, 84 stations sharing one placeholder coordinate, and no AQI column at all. Before anyone can forecast air quality, the data has to be made trustworthy — and then the forecast has to be proven better than simply assuming tomorrow looks like today.",
     role: "Solo — data engineering, the CPCB AQI engine, feature design, modelling, honest evaluation, the API and the map interface",
@@ -365,7 +365,7 @@ export const projects = [
     approach: [
       {
         title: "Make 546 files into one table",
-        body: "Collapsed 113 distinct header layouts into a single schema and wrote 71.8M readings as partitioned Parquet, queried through DuckDB with no database server to run.",
+        body: "Collapsed 113 distinct header layouts into a single schema and wrote 71.9M readings as partitioned Parquet, queried through DuckDB with no database server to run.",
       },
       {
         title: "Fix the registry before trusting it",

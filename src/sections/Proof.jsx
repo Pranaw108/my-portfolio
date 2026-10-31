@@ -40,14 +40,15 @@ export default function Proof() {
     <section aria-label="At a glance" className="border-t border-line">
       <div className="container-page">
         <Reveal>
-          <dl className="grid gap-8 py-12 sm:grid-cols-2 md:py-16 lg:grid-cols-4">
+          <dl className="grid grid-cols-2 gap-x-5 gap-y-9 py-12 md:py-16 lg:grid-cols-4 lg:gap-x-8">
             {stats.map((stat) => (
-              <div key={stat.label}>
-                <dd className="text-[clamp(2rem,4vw,2.75rem)] leading-none font-semibold tracking-[-0.03em] text-ink">
+              // dt must lead its group, so the number is lifted above it with order.
+              <div key={stat.label} className="flex min-w-0 flex-col">
+                <dt className="eyebrow order-2 mt-3">{stat.label}</dt>
+                <dd className="order-1 text-[clamp(1.85rem,4vw,2.75rem)] leading-none font-semibold tracking-[-0.03em] text-ink">
                   <StatCounter value={stat.value} decimals={stat.decimals ?? 0} suffix={stat.suffix ?? ""} />
                 </dd>
-                <dt className="eyebrow mt-3">{stat.label}</dt>
-                <p className="mt-1.5 text-sm leading-relaxed text-muted text-pretty">{stat.note}</p>
+                <dd className="order-3 mt-1.5 text-sm leading-relaxed text-muted text-pretty">{stat.note}</dd>
               </div>
             ))}
           </dl>
