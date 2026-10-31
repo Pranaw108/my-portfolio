@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Disallow: /api/
+
+Sitemap: https://my-portfolio-two-gilt-97.vercel.app/sitemap.xml
