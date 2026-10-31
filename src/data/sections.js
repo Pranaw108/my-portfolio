@@ -3,9 +3,9 @@
 // inserting one section silently left the rest mis-numbered.
 
 export const sections = [
-  { id: "services", label: "Services", inNav: true },
   { id: "work", label: "Work", inNav: true },
-  { id: "ask", label: "Ask", inNav: true },
+  { id: "services", label: "Services", inNav: true },
+  { id: "ask", label: "Ask", inNav: false },
   { id: "experience", label: "Experience", inNav: true },
   { id: "about", label: "About", inNav: true },
   { id: "skills", label: "Toolkit", inNav: false },

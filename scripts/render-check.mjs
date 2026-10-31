@@ -44,7 +44,6 @@ try {
     "form has honeypot": html.includes('name="company"'),
     "case study links wired": html.includes('href="/work/audio-recommender"'),
     "featured SaaS case study linked": html.includes('href="/work/school-erp-saas"') && has("Featured"),
-    "services numbered 01": /01<\/span>[\s\S]{0,160}What I can build/.test(html),
     // Section numbers are asserted below, derived from sections.js rather than
     // hardcoded — adding a section used to break this test.
     "every section has an accessible name": [
@@ -100,7 +99,12 @@ try {
   // assertion stale the way a hardcoded "08" did. Anchored on each section's own
   // eyebrow text, because "Start a project" also appears on the hero button.
   const { sectionIndex } = await server.ssrLoadModule("/src/data/sections.js");
-  for (const [id, eyebrow] of [["contact", "Start a project"], ["ask", "Ask me anything"]]) {
+  for (const [id, eyebrow] of [
+    ["work", "Selected work"],
+    ["services", "What I can build"],
+    ["contact", "Start a project"],
+    ["ask", "Ask me anything"],
+  ]) {
     const number = sectionIndex(id);
     checks[`${id} numbered ${number}`] = new RegExp(
       `${number}</span>[^]{0,200}?${eyebrow}`,

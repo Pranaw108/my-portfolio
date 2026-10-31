@@ -12,16 +12,17 @@ import StartProject from "../sections/StartProject";
 import ContactPanel from "../sections/Contact";
 
 /**
- * Order follows what a visitor needs to decide: what I can do for them,
- * proof it works, who I am, the usual objections, then the ask.
+ * Order follows what a visitor needs to decide: the work itself first (recruiters
+ * and clients both look for it), then what I can do for them, who I am, the
+ * usual objections, then the ask. Keep in step with data/sections.js.
  */
 export default function Home() {
   return (
     <>
       <Hero />
       <Proof />
-      <Services />
       <Work />
+      <Services />
       <AskMe />
       <Experience />
       <About />
