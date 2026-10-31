@@ -1,5 +1,7 @@
 import { useEffect, useRef, useState } from "react";
-import { AlertCircle, CheckCircle2, Loader2, Send } from "lucide-react";
+import { m, useReducedMotion } from "framer-motion";
+import { AlertCircle, Loader2, Send } from "lucide-react";
+import { EASE } from "../lib/motion";
 import { profile } from "../data/profile";
 import { services } from "../data/services";
 import { sectionIndex } from "../data/sections";
@@ -38,6 +40,30 @@ function fieldState(hasError) {
     : `${fieldClasses} border-line focus:border-accent focus:ring-2 focus:ring-accent/20`;
 }
 
+/** A tick that draws itself: ring first, then the check. Shown only after a real 2xx reply. */
+function DrawnCheck() {
+  const reduce = useReducedMotion();
+  const draw = (delay, duration) =>
+    reduce
+      ? { initial: false }
+      : { initial: { pathLength: 0, opacity: 0 }, animate: { pathLength: 1, opacity: 1 }, transition: { duration, ease: EASE, delay } };
+
+  return (
+    <svg viewBox="0 0 52 52" className="size-14 text-emerald-600 dark:text-emerald-400" aria-hidden="true">
+      <m.circle cx="26" cy="26" r="23" fill="none" stroke="currentColor" strokeWidth="2.5" {...draw(0, 0.5)} />
+      <m.path
+        d="M16 27 l7 7 l13 -15"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="3"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        {...draw(0.35, 0.35)}
+      />
+    </svg>
+  );
+}
+
 function Field({ id, label, error, hint, children }) {
   return (
     <div>
@@ -68,6 +94,14 @@ export default function StartProject() {
   const [serverError, setServerError] = useState("");
   const mountedAt = useRef(null);
   const statusRef = useRef(null);
+
+  const reduce = useReducedMotion();
+
+  // Move focus to the outcome once it has rendered, so it is announced and the
+  // keyboard user lands on it. (Focusing straight after setState hit a stale ref.)
+  useEffect(() => {
+    if (status === "success" || status === "error") statusRef.current?.focus();
+  }, [status, serverError]);
 
   // Set after render, so nothing impure runs during it.
   useEffect(() => {
@@ -143,7 +177,6 @@ export default function StartProject() {
       setStatus("error");
       setServerError(error.message);
     }
-    statusRef.current?.focus();
   }
 
   return (
@@ -182,13 +215,16 @@ export default function StartProject() {
             </div>
             <div className="p-6 sm:p-8 md:p-10">
             {status === "success" ? (
-              <div
+              <m.div
                 ref={statusRef}
                 tabIndex={-1}
                 role="status"
-                className="flex flex-col items-start gap-4 py-8 text-center sm:items-center"
+                initial={reduce ? false : { opacity: 0, scale: 0.97 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.35, ease: EASE }}
+                className="flex flex-col items-start gap-4 py-8 text-center outline-none sm:items-center"
               >
-                <CheckCircle2 className="size-10 text-accent" aria-hidden="true" />
+                <DrawnCheck />
                 <h3 className="text-2xl font-semibold tracking-[-0.02em]">Message sent.</h3>
                 <p className="max-w-md text-left leading-relaxed text-muted text-pretty sm:text-center">
                   Thanks — it's in my inbox. I'll reply to you within a couple of days. If it's urgent, email me
@@ -197,7 +233,7 @@ export default function StartProject() {
                 <Button variant="secondary" onClick={() => setStatus("idle")}>
                   Send another message
                 </Button>
-              </div>
+              </m.div>
             ) : (
               <form onSubmit={handleSubmit} noValidate className="grid gap-6">
                 <div className="grid gap-6 sm:grid-cols-2">
