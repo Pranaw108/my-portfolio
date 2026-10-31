@@ -1,4 +1,4 @@
-import { ArrowRight, BarChart3, Boxes, Building2, Check, Database, Sparkles } from "lucide-react";
+import { ArrowRight, BarChart3, Boxes, Building2, Check, Database, Plus, Sparkles } from "lucide-react";
 import { Link } from "react-router-dom";
 import { processSteps, services } from "../data/services";
 import { sectionIndex } from "../data/sections";
@@ -12,55 +12,74 @@ const ICONS = { Sparkles, Database, BarChart3, Boxes, Building2 };
 function ServiceCard({ service }) {
   const Icon = ICONS[service.icon] ?? Sparkles;
   return (
-    <article className="card group relative isolate flex flex-col overflow-hidden p-6 shadow-soft transition-[border-color,box-shadow,transform] duration-500 ease-out-expo hover:-translate-y-1 hover:border-line-strong hover:shadow-lift sm:p-8">
+    <article className="card group relative isolate flex h-full flex-col overflow-hidden p-6 shadow-soft transition-[border-color,box-shadow,transform] duration-500 ease-out-expo hover:-translate-y-1 hover:border-line-strong hover:shadow-lift sm:p-7">
       {/* A soft wash that only appears on hover, so the grid stays calm at rest. */}
       <span
         aria-hidden="true"
         className={`pointer-events-none absolute -top-24 -right-24 -z-10 size-56 rounded-full bg-gradient-to-br ${service.tint} opacity-0 blur-3xl transition-opacity duration-700 group-hover:opacity-[0.14]`}
       />
 
-      <span
-        aria-hidden="true"
-        className={`grid size-12 place-items-center rounded-2xl bg-gradient-to-br ${service.tint} text-white shadow-soft transition-transform duration-500 ease-out-expo group-hover:scale-105`}
-      >
-        <Icon className="size-5" />
-      </span>
+      <div className="flex items-start gap-4">
+        <span
+          aria-hidden="true"
+          className={`grid size-11 shrink-0 place-items-center rounded-2xl bg-gradient-to-br ${service.tint} text-white shadow-soft transition-transform duration-500 ease-out-expo group-hover:scale-105`}
+        >
+          <Icon className="size-5" />
+        </span>
+        <div className="min-w-0">
+          <h3 className="text-lg leading-snug font-semibold tracking-[-0.02em] sm:text-xl">{service.title}</h3>
+          <p className="mt-1 font-serif text-[1.05rem] leading-snug text-accent italic">{service.tagline}</p>
+        </div>
+      </div>
 
-      <h3 className="mt-5 text-xl font-semibold tracking-[-0.02em] sm:text-2xl">{service.title}</h3>
-      <p className="mt-2 font-serif text-lg italic text-accent">{service.tagline}</p>
+      <p className="mt-5 text-[0.95rem] leading-relaxed text-muted text-pretty">{service.problem}</p>
 
-      <p className="mt-5 leading-relaxed text-muted text-pretty">{service.problem}</p>
+      {/* Deliverables fold away so five services stay scannable; still in the DOM for find-in-page. */}
+      <details className="group/details mt-5 rounded-2xl border border-line bg-bg/50 open:bg-bg/80">
+        <summary className="flex list-none items-center justify-between gap-3 rounded-2xl px-4 py-3 text-sm font-medium text-ink-soft transition-colors hover:text-ink [&::-webkit-details-marker]:hidden">
+          What you get
+          <span className="flex items-center gap-2 font-mono text-[0.7rem] text-muted">
+            {service.deliverables.length} items
+            <Plus
+              className="size-4 transition-transform duration-400 ease-out-expo group-open/details:rotate-45"
+              aria-hidden="true"
+            />
+          </span>
+        </summary>
+        <ul className="space-y-2 px-4 pb-4">
+          {service.deliverables.map((item) => (
+            <li key={item} className="flex gap-2.5 text-[0.9rem] leading-relaxed text-ink-soft">
+              <Check className="mt-1 size-4 shrink-0 text-accent" aria-hidden="true" />
+              <span className="text-pretty">{item}</span>
+            </li>
+          ))}
+        </ul>
+      </details>
 
-      <h4 className="eyebrow mt-7">What you get</h4>
-      <ul className="mt-3 space-y-2.5">
-        {service.deliverables.map((item) => (
-          <li key={item} className="flex gap-2.5 text-[0.95rem] leading-relaxed text-ink-soft">
-            <Check className="mt-1 size-4 shrink-0 text-accent" aria-hidden="true" />
-            <span className="text-pretty">{item}</span>
+      <ul className="mt-5 flex flex-wrap gap-1.5" aria-label="Technologies">
+        {service.stack.map((tech) => (
+          <li key={tech}>
+            <Tag>{tech}</Tag>
           </li>
         ))}
       </ul>
 
-      <div className="mt-7 flex flex-wrap gap-1.5">
-        {service.stack.map((tech) => (
-          <Tag key={tech}>{tech}</Tag>
-        ))}
-      </div>
-
       {/* Proof sits inside the service, so the claim and the evidence are never apart. */}
-      <div className="mt-7 border-t border-line pt-5">
-        <h4 className="eyebrow">Proof</h4>
-        <p className="mt-2.5 text-[0.95rem] leading-relaxed text-ink-soft text-pretty">{service.evidence.metric}</p>
-        <Link
-          to={`/work/${service.evidence.slug}`}
-          className="group/link mt-3 inline-flex items-center gap-1.5 text-[0.95rem] font-medium text-accent transition-colors hover:text-accent-bright"
-        >
-          {service.evidence.label}
-          <ArrowRight
-            className="size-4 transition-transform duration-300 ease-out-expo group-hover/link:translate-x-0.5"
-            aria-hidden="true"
-          />
-        </Link>
+      <div className="mt-auto pt-6">
+        <div className="border-t border-line pt-5">
+          <h4 className="eyebrow">Proof</h4>
+          <p className="mt-2 text-[0.92rem] leading-relaxed text-ink-soft text-pretty">{service.evidence.metric}</p>
+          <Link
+            to={`/work/${service.evidence.slug}`}
+            className="group/link mt-2.5 inline-flex items-center gap-1.5 text-[0.92rem] font-medium text-accent transition-colors hover:text-accent-bright"
+          >
+            {service.evidence.label}
+            <ArrowRight
+              className="size-4 transition-transform duration-300 ease-out-expo group-hover/link:translate-x-0.5"
+              aria-hidden="true"
+            />
+          </Link>
+        </div>
       </div>
     </article>
   );
@@ -80,35 +99,33 @@ export default function Services() {
           claim rather than take my word for it.
         </SectionHeading>
 
-        <div className="mt-14 grid gap-5 md:mt-16 lg:grid-cols-2">
+        <div className="mt-12 grid grid-cols-1 gap-5 md:mt-14 md:grid-cols-2 lg:grid-cols-3">
           {services.map((service, i) => (
-            <Reveal
-              key={service.id}
-              delay={i * 0.06}
-              className={services.length % 2 === 1 && i === services.length - 1 ? "lg:col-span-2" : undefined}
-            >
+            <Reveal key={service.id} delay={i * 0.06} className="min-w-0">
               <ServiceCard service={service} />
             </Reveal>
           ))}
-        </div>
 
-        {/* How an engagement runs — kept as a strip rather than its own section. */}
-        <Reveal className="mt-16 md:mt-20">
-          <div className="card overflow-hidden p-6 shadow-soft sm:p-8 md:p-10">
-            <h3 className="eyebrow">How we'd work together</h3>
-            <ol className="mt-7 grid gap-x-8 gap-y-8 sm:grid-cols-2 lg:grid-cols-4">
-              {processSteps.map((step, i) => (
-                <li key={step.title} className="relative">
-                  <span className="font-mono text-[0.72rem] font-medium tracking-[0.14em] text-accent tabular">
-                    {String(i + 1).padStart(2, "0")}
-                  </span>
-                  <h4 className="mt-2.5 text-lg font-semibold tracking-[-0.015em]">{step.title}</h4>
-                  <p className="mt-2 text-[0.95rem] leading-relaxed text-muted text-pretty">{step.body}</p>
-                </li>
-              ))}
-            </ol>
-          </div>
-        </Reveal>
+          {/* How an engagement runs — fills the grid's last cell instead of a separate strip. */}
+          <Reveal delay={services.length * 0.06} className="min-w-0">
+            <div className="flex h-full flex-col rounded-3xl border border-dashed border-line-strong bg-bg-soft p-6 sm:p-7">
+              <h3 className="eyebrow">How we'd work together</h3>
+              <ol className="relative mt-6 space-y-5 before:absolute before:top-2 before:bottom-2 before:left-[0.9rem] before:w-px before:bg-line-strong">
+                {processSteps.map((step, i) => (
+                  <li key={step.title} className="relative grid grid-cols-[1.8rem_minmax(0,1fr)] gap-x-3">
+                    <span className="relative grid size-7 place-items-center rounded-full border border-line-strong bg-surface font-mono text-[0.68rem] font-medium text-accent tabular">
+                      {String(i + 1).padStart(2, "0")}
+                    </span>
+                    <div>
+                      <h4 className="font-semibold tracking-[-0.015em]">{step.title}</h4>
+                      <p className="mt-1 text-[0.9rem] leading-relaxed text-muted text-pretty">{step.body}</p>
+                    </div>
+                  </li>
+                ))}
+              </ol>
+            </div>
+          </Reveal>
+        </div>
       </div>
     </section>
   );
