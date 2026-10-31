@@ -134,10 +134,10 @@ export const projects = [
     slug: "audio-recommender",
     categories: ["Machine learning", "Apps"],
     title: "Personalized Audio Recommender",
-    kind: "Machine learning · Flutter app",
+    kind: "Machine learning · Flutter prototype",
     year: "2026",
     summary:
-      "A recommendation system for an audio-storytelling platform, and the Flutter home screen that runs it entirely on the phone.",
+      "A recommendation system for an audio-storytelling platform, and a Flutter prototype home screen that shows it working entirely on the phone.",
     problem:
       "Listening data was extremely sparse — the median listener had played a single title — so the usual recommenders had very little signal to learn from. The goal was a home screen that feels personal from the first session, without sending anything about the listener to a server.",
     role: "AI/ML Engineer at Vibe6 Digital — data pipeline, modeling, evaluation and the Flutter prototype",
