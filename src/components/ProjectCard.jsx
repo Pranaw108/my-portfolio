@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { ArrowRight, Lock } from "lucide-react";
 import { loadCaseStudy } from "../lib/routes";
+import { getCodeLink } from "../data/projects";
 import Reveal from "./Reveal";
 import Tag from "./Tag";
 import ProjectVisual from "./ProjectVisual";
@@ -11,7 +12,7 @@ const MAX_TAGS = 5;
 export default function ProjectCard({ project, index }) {
   const reversed = index % 2 === 1;
   const extraTags = project.stack.length - MAX_TAGS;
-  const codeLink = project.source ? { href: project.source, label: "Source" } : project.openSource;
+  const codeLink = getCodeLink(project);
 
   return (
     <Reveal
@@ -81,9 +82,10 @@ export default function ProjectCard({ project, index }) {
               href={codeLink.href}
               target="_blank"
               rel="noopener noreferrer"
-              className="relative z-10 inline-flex items-center gap-2 rounded-full border border-line px-3.5 py-2 text-sm text-ink-soft transition-colors hover:border-ink hover:text-ink"
+              aria-label={`Code for ${project.title}${codeLink.isRebuild ? " (open-source rebuild)" : ""} on GitHub, opens in a new tab`}
+              className="relative z-10 inline-flex items-center gap-2 rounded-full border border-line px-3.5 py-2 text-sm font-medium text-ink-soft transition-colors hover:border-ink hover:text-ink"
             >
-              <GitHubIcon /> {codeLink.label}
+              <GitHubIcon /> Code
             </a>
           ) : (
             <span className="inline-flex items-center gap-1.5 font-mono text-[0.72rem] text-muted">

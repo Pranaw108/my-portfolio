@@ -1,6 +1,6 @@
 import { Link, useParams } from "react-router-dom";
 import { ArrowLeft, ArrowRight, Check, Lock } from "lucide-react";
-import { getProject, projects } from "../data/projects";
+import { getCodeLink, getProject, projects } from "../data/projects";
 import useDocumentTitle from "../hooks/useDocumentTitle";
 import Reveal from "../components/Reveal";
 import Tag from "../components/Tag";
@@ -82,6 +82,7 @@ export default function CaseStudy() {
 
   const index = projects.indexOf(project);
   const next = projects[(index + 1) % projects.length];
+  const codeLink = getCodeLink(project);
 
   return (
     <article className="pt-28 pb-8 md:pt-36">
@@ -106,6 +107,12 @@ export default function CaseStudy() {
           <p className="mt-6 max-w-3xl text-[clamp(1.15rem,2vw,1.45rem)] leading-snug text-ink-soft text-pretty">
             {project.summary}
           </p>
+          {codeLink && (
+            <ButtonLink href={codeLink.href} variant="secondary" size="md" className="mt-8">
+              <GitHubIcon /> Code on GitHub
+              {codeLink.isRebuild && <span className="text-muted">· open-source rebuild</span>}
+            </ButtonLink>
+          )}
         </Reveal>
       </header>
 
@@ -134,22 +141,24 @@ export default function CaseStudy() {
             </div>
             <div>
               <h2 className="eyebrow">Code</h2>
-              {project.source ? (
-                <ButtonLink href={project.source} variant="secondary" size="sm" className="mt-3">
-                  <GitHubIcon /> View source on GitHub
+              {project.sourceNote && (
+                <p className="mt-2 flex gap-2 text-sm leading-relaxed text-muted">
+                  <Lock className="mt-0.5 size-4 shrink-0" aria-hidden="true" />
+                  {project.sourceNote}
+                </p>
+              )}
+              {codeLink ? (
+                <ButtonLink href={codeLink.href} variant="secondary" size="sm" className="mt-3">
+                  <GitHubIcon /> {codeLink.isRebuild ? "Code · open-source rebuild" : "Code on GitHub"}
                 </ButtonLink>
               ) : (
-                <>
+                // Private client work: no repo to show, and nothing that names the client.
+                !project.sourceNote && (
                   <p className="mt-2 flex gap-2 text-sm leading-relaxed text-muted">
                     <Lock className="mt-0.5 size-4 shrink-0" aria-hidden="true" />
-                    {project.sourceNote}
+                    {project.sourceLabel ?? "Private repository"}
                   </p>
-                  {project.openSource && (
-                    <ButtonLink href={project.openSource.href} variant="secondary" size="sm" className="mt-3">
-                      <GitHubIcon /> {project.openSource.label}
-                    </ButtonLink>
-                  )}
-                </>
+                )
               )}
             </div>
           </Reveal>

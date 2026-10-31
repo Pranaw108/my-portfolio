@@ -409,5 +409,15 @@ export const projects = [
 
 export const getProject = (slug) => projects.find((p) => p.slug === slug);
 
+/**
+ * The public repo to show as "Code", or null for private work (the client SaaS stays anonymised).
+ * A private project with an open-source rebuild links the rebuild, and says so.
+ */
+export function getCodeLink(project) {
+  if (project.source) return { href: project.source, isRebuild: false };
+  if (project.openSource) return { href: project.openSource.href, isRebuild: true };
+  return null;
+}
+
 /** Every category that appears, in the order projects are listed. */
 export const projectCategories = [...new Set(projects.flatMap((p) => p.categories ?? []))];
