@@ -15,7 +15,7 @@ export const projects = [
       "A school management platform sold to many schools from one deployment — fees and online payments, attendance, exams, timetables, transport tracking and role dashboards for admins, teachers, parents and students.",
     problem:
       "Every school on the platform shares the same servers and database, so one school must never see another's data — not through a bug, a forgotten filter or a crafted request. Each school also brings its own payment gateway, GPS provider and other systems, and needs to connect them from the app itself, without a developer.",
-    role: "Full-stack engineer at Vibe6 Digital in a small team — I built fees and payments, the integrations hub, transport, attendance, exam marking, the CRM and the role dashboards",
+    role: "Full-stack engineer at Vibe6 Digital in a small team — I built fees and online payments, assessment and online-test tooling, the integrations hub, transport, attendance, bulk import and export, the CRM and the role dashboards",
     stack: [
       "TypeScript",
       "NestJS",
@@ -80,7 +80,7 @@ export const projects = [
       },
       {
         title: "Payments that cannot double-count",
-        body: "Each school's own gateway takes its fee payments. An order is always confirmed with the gateway that opened it, even if the school switches gateways mid-payment, and a sandbox lets a school rehearse the whole flow.",
+        body: "Fees are paid online through four gateways — Razorpay, Cashfree, PayU and Stripe — with each school on its own account and the platform admin choosing which gateways schools may use. Part payments are supported. An order is always confirmed with the gateway that opened it, even if the school switches gateways mid-payment, and Cashfree and PayU are proven end to end on their real sandboxes.",
       },
       {
         title: "Signed incoming webhooks",
@@ -88,16 +88,36 @@ export const projects = [
       },
       {
         title: "Prove the tests can fail",
-        body: "For each security guard I broke it on purpose and checked that a test went red for the right reason. That is how I found a payment could be confirmed with the wrong gateway after a switch, which now has its own test.",
+        body: "Integration tests run against real PostgreSQL and object storage, and every new table gets a cross-school isolation check. For each security guard I broke it on purpose and checked that a test went red for the right reason. That is how I found a payment could be confirmed with the wrong gateway after a switch, which now has its own test.",
       },
     ],
     features: [
       "Role dashboards for admins, teachers, parents and students",
-      "Fees, invoices and online payments through each school's own gateway",
+      "Fees, invoices and part payments online through Razorpay, Cashfree, PayU or Stripe, on each school's own account",
       "Live school-bus tracking from the school's GPS provider",
       "Attendance for students and staff, with holiday rules per class",
-      "Exams, online tests and a marking queue for teachers",
+      "Exams, online tests and a marking queue for teachers, with re-evaluation requests and per-question analytics",
       "Command palette, dark mode and a mobile app for parents",
+    ],
+    // Shipped in October 2026. Facts only: no client name, no user counts.
+    recentTitle: "Recent work · October 2026",
+    recent: [
+      {
+        title: "Online fee payments, four gateways",
+        body: "Razorpay, Cashfree, PayU and Stripe, each school on its own account. The platform admin decides which gateways schools may use, parents can pay in part, and Cashfree and PayU are proven end to end on their real sandboxes.",
+      },
+      {
+        title: "Assessment, end to end",
+        body: "Exam defaults per school; papers for chosen students, with one candidate rule reused by admit cards, marks, online tests, OMR and results; re-evaluation requests from students and parents with a moderators' queue and notifications; teacher remarks on marks; per-question difficulty from real results; paper marking schemes and question-bank tags.",
+      },
+      {
+        title: "Webcam identity check for online tests",
+        body: "Optional, with consent shown to students first. Photos go straight to private object storage through size-signed upload links, are verified as JPEG on the server, are visible only to exam managers and are deleted automatically after a retention period.",
+      },
+      {
+        title: "Data at school scale",
+        body: "Student import raised from 2,000 to 20,000 rows: a staged, chunked upload that is validated and committed as one all-or-nothing import. A real .xlsx export writer with no dependencies, and the OMR recogniser secured with a shared secret.",
+      },
     ],
     galleryTitle: "Screens",
     gallery: [

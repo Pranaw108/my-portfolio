@@ -198,6 +198,20 @@ export default function CaseStudy() {
             </ol>
           </Block>
 
+          {project.recent?.length > 0 && (
+            <Block title={project.recentTitle ?? "Recent work"}>
+              <ul className="grid gap-4 sm:grid-cols-2">
+                {project.recent.map((item) => (
+                  <li key={item.title} className="card relative overflow-hidden p-5">
+                    <span aria-hidden="true" className="absolute inset-y-0 left-0 w-[3px] bg-accent/70" />
+                    <h3 className="font-medium text-ink">{item.title}</h3>
+                    <p className="mt-1.5 text-[0.95rem] leading-relaxed text-muted text-pretty">{item.body}</p>
+                  </li>
+                ))}
+              </ul>
+            </Block>
+          )}
+
           <Block title="Key features">
             <ul className="grid gap-x-8 gap-y-3 sm:grid-cols-2">
               {project.features.map((feature) => (
