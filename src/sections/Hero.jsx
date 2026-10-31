@@ -1,17 +1,24 @@
 import { m } from "framer-motion";
-import { ArrowDown, ArrowUpRight, MapPin } from "lucide-react";
+import { ArrowDown, ArrowUpRight, Mail, MapPin } from "lucide-react";
 import { profile } from "../data/profile";
 import { experience } from "../data/experience";
 import { education } from "../data/profile";
 import { EASE } from "../lib/motion";
 import ButtonLink from "../components/Button";
 import HeroChart from "../components/HeroChart";
+import { GitHubIcon, LinkedInIcon } from "../components/BrandIcons";
 
 const fadeUp = (delay) => ({
   initial: { opacity: 0, y: 16 },
   animate: { opacity: 1, y: 0 },
   transition: { duration: 0.8, ease: EASE, delay },
 });
+
+const socials = [
+  { label: "GitHub", href: profile.links.github, icon: GitHubIcon, external: true },
+  { label: "LinkedIn", href: profile.links.linkedin, icon: LinkedInIcon, external: true },
+  { label: "Email", href: `mailto:${profile.email}`, icon: Mail },
+];
 
 const previous = experience.find((job) => !job.current);
 const facts = [
@@ -29,18 +36,25 @@ export default function Hero() {
         <div className="absolute inset-0 bg-[radial-gradient(var(--line-strong)_1px,transparent_1px)] mask-[radial-gradient(ellipse_70%_60%_at_50%_0%,black,transparent)] bg-size-[26px_26px] opacity-70" />
         <div className="absolute -top-48 -right-40 size-176 rounded-full bg-[radial-gradient(closest-side,var(--accent-soft),transparent)]" />
         {/* Sits above the facts strip and fades in from the middle, so it never runs under text */}
-        <HeroChart className="absolute inset-x-0 bottom-36 hidden h-[34%] w-full mask-[linear-gradient(to_right,transparent_42%,black_78%)] md:block" />
+        <HeroChart className="absolute inset-x-0 bottom-36 hidden h-[34%] w-full mask-[linear-gradient(to_right,transparent_55%,black_82%)] md:block" />
       </div>
 
-      <div className="container-page pt-28 pb-12 md:pt-40 md:pb-16">
+      <div className="container-page pt-24 pb-12 md:pt-36 md:pb-16">
         <div className="grid items-end gap-8 md:grid-cols-[minmax(0,1fr)_auto] md:gap-14">
           <div>
-            <m.p {...fadeUp(0.05)} className="eyebrow flex items-center gap-2.5">
-              <span className="relative flex size-2">
-                <span className="animate-ping-soft absolute inline-flex size-full rounded-full bg-accent-bright" />
-                <span className="relative inline-flex size-2 rounded-full bg-accent-bright" />
+            {/* Status pill: green is the "available" signal, kept apart from the brand accent. */}
+            <m.p
+              {...fadeUp(0.05)}
+              className="inline-flex max-w-full items-center gap-2.5 rounded-full border border-line bg-surface/70 py-1.5 pr-4 pl-3 text-[0.82rem] text-ink-soft shadow-soft backdrop-blur-sm select-none"
+            >
+              <span className="relative flex size-2 shrink-0">
+                <span className="animate-ping-soft absolute inline-flex size-full rounded-full bg-emerald-500" />
+                <span className="relative inline-flex size-2 rounded-full bg-emerald-500" />
               </span>
-              Currently at {profile.currentCompany}
+              <span>
+                {profile.currentRole} at {profile.currentCompany}
+                <span className="hidden text-muted sm:inline"> · {profile.availability}</span>
+              </span>
             </m.p>
 
             <h1 className="mt-6 text-[clamp(3.5rem,11vw,8rem)] leading-[0.88] font-semibold tracking-[-0.055em]">
@@ -65,8 +79,13 @@ export default function Hero() {
               className="mt-6 max-w-2xl text-[clamp(1.2rem,2.3vw,1.65rem)] leading-snug tracking-[-0.015em] text-ink-soft text-balance"
             >
               AI/ML Engineer <span className="font-serif text-[1.12em] text-accent italic">and</span> Full-stack Developer
-              <span className="mt-1 block text-[0.72em] tracking-normal text-muted">
-                Recommender systems · Multi-tenant SaaS · Python · TypeScript
+              <span className="mt-2 flex flex-wrap gap-x-4 gap-y-1 text-[0.72em] tracking-normal text-muted">
+                {profile.focus.map((item) => (
+                  <span key={item} className="inline-flex items-center gap-2 whitespace-nowrap">
+                    <span className="size-1.5 rounded-full bg-accent/70" aria-hidden="true" />
+                    {item}
+                  </span>
+                ))}
               </span>
             </m.p>
 
@@ -90,19 +109,34 @@ export default function Hero() {
                 <ArrowUpRight className="size-4 transition-transform duration-300 group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5" />
               </ButtonLink>
             </m.div>
+
+            <m.ul {...fadeUp(0.7)} className="mt-6 flex items-center gap-2" aria-label="Profiles">
+              {socials.map(({ label, href, icon: Icon, external }) => (
+                <li key={label}>
+                  <a
+                    href={href}
+                    aria-label={label}
+                    {...(external && { target: "_blank", rel: "noopener noreferrer" })}
+                    className="grid size-11 place-items-center rounded-full border border-line bg-surface/60 text-muted transition-[color,border-color,transform] duration-300 ease-out-expo hover:-translate-y-0.5 hover:border-ink hover:text-ink"
+                  >
+                    <Icon className="size-[18px]" aria-hidden="true" />
+                  </a>
+                </li>
+              ))}
+            </m.ul>
           </div>
 
           <m.figure
             initial={{ opacity: 0, scale: 0.96 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 1.1, ease: EASE, delay: 0.2 }}
-            className="group relative order-first w-20 md:order-none md:w-64 lg:w-76"
+            className="group relative order-first w-28 md:order-none md:w-64 lg:w-76"
           >
-            <div className="aspect-square overflow-hidden rounded-2xl border border-line bg-bg-soft shadow-lift md:aspect-4/5 md:rounded-[2rem]">
+            <div className="aspect-square overflow-hidden rounded-3xl border border-line bg-bg-soft shadow-lift md:aspect-4/5 md:rounded-[2rem]">
               <img
                 src={profile.photo.src}
                 srcSet={profile.photo.srcSet}
-                sizes="(min-width: 1024px) 304px, (min-width: 768px) 256px, 80px"
+                sizes="(min-width: 1024px) 304px, (min-width: 768px) 256px, 112px"
                 width="960"
                 height="960"
                 alt="Portrait of Pranaw Gautam"

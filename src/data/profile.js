@@ -5,6 +5,9 @@ export const profile = {
   currentCompany: "Vibe6 Digital",
   intro:
     "I build machine-learning features and the products around them — recommenders proven on held-out data, and a multi-tenant SaaS platform in TypeScript, NestJS and Postgres that real schools run on.",
+  // Mirrors the FAQ answer on freelance work. TODO(Pranaw): change if you are also open to full-time roles.
+  availability: "Taking on a few freelance projects",
+  focus: ["Recommender systems", "Multi-tenant SaaS", "Python", "TypeScript"],
   location: "Indore, Madhya Pradesh, India",
   locationShort: "Indore, India",
   email: "pranawgautam@gmail.com",
