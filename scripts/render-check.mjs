@@ -162,6 +162,57 @@ try {
   checks["kisanshield shows its UI work"] = html.includes("React diagnosis interface")
     || html.includes("Web & mobile UI");
 
+  // Assistant answers: every chip leads somewhere real, and nothing is invented.
+  const { ask, OPENING } = await server.ssrLoadModule("/src/lib/assistant.js");
+  const { faqs } = await server.ssrLoadModule("/src/data/faqs.js");
+  const { sectionIds } = await server.ssrLoadModule("/src/data/sections.js");
+  const validTargets = new Set([
+    ...sectionIds.map((id) => `/#${id}`),
+    ...projects.map((p) => `/work/${p.slug}`),
+    ...faqs.map((f) => `/#faq-${f.slug}`),
+  ]);
+  const probes = [
+    "Who is Pranaw?", "Tech stack", "Show projects", "Experience", "Education", "Credentials", "Services",
+    "Pricing", "Contact details", "Resume", "Is he available?", "Where is he based?", "What did he achieve?",
+    "Start a project", ...projects.map((p) => p.title),
+  ];
+  const answers = probes.map((q) => [q, ask(q)]);
+  const chipsFrom = (a) => [...(a.chips ?? []), ...(a.chipGroups ?? []).flatMap((g) => g.chips)];
+  const everyChip = new Set([...chipsFrom(OPENING), ...answers.flatMap(([, a]) => chipsFrom(a))]);
+  checks["assistant: every suggested chip gets a real answer"] = [...everyChip].every((chip) => !ask(chip).fallback);
+  checks["assistant: probe questions never fall back"] = answers.every(([, a]) => !a.fallback);
+  checks["assistant: no 'undefined' in any answer"] = answers.every(([, a]) => !a.text.includes("undefined"));
+  checks["assistant: internal links point at real sections, FAQs or case studies"] = answers
+    .flatMap(([, a]) => a.links ?? [])
+    .filter((l) => l.to)
+    .every((l) => validTargets.has(l.to));
+  checks["assistant: no unrecorded remote-work claim"] = !ask("Where is he based?").text.includes("works remotely");
+  checks["assistant: project answers link public code only"] = projects.every((p) => {
+    const hrefs = (ask(p.title).links ?? []).filter((l) => l.href).map((l) => l.href);
+    return p.source || p.openSource ? hrefs.length === 1 : hrefs.length === 0;
+  });
+  checks["assistant: unknown question admits it and offers a direct route"] = (() => {
+    const a = ask("what is his favourite colour of zebra");
+    return a.fallback && a.links.some((l) => l.href?.startsWith("mailto:")) && a.text.includes("don't know");
+  })();
+  checks["assistant: grouped starter questions render"] = html.includes('aria-label="Suggested questions"') && html.includes(">Hiring<");
+  checks["assistant never names the client"] = answers.every(([, a]) => !/SVS|EduTech/i.test(a.text));
+
+  // Contact: one form plus one row of direct routes, no repeated panels.
+  checks["contact: old duplicate email panel is gone"] = !html.includes("Prefer email?") && !html.includes("other-contact-title");
+  checks["contact: form no longer repeats the email line"] = !html.includes("Or email me at");
+  checks["contact: one direct-contact row"] = (html.match(/aria-label="Direct contact options"/g) ?? []).length === 1;
+
+  // The SaaS case study carries the October work and stays anonymised.
+  const erp = caseStudyHtml["school-erp-saas"] ?? "";
+  checks["saas case study shows recent work"] = erp.includes("Recent work") && ["Razorpay", "Cashfree", "PayU", "Stripe"].every((g) => erp.includes(g));
+  checks["saas case study never names the client"] = !/SVS|EduTech/i.test(erp);
+
+  // Toolkit and FAQ.
+  checks["toolkit: every group has its colour tone"] = (html.match(/--tone:var\(--tone-/g) ?? []).length === 6;
+  checks["faq: every answer is deep-linkable"] = faqs.every((f) => html.includes(`id="faq-${f.slug}"`));
+  checks["faq: buttons control their panels"] = faqs.every((f) => html.includes(`aria-controls="faq-a-${f.slug}"`));
+
   const failures = Object.entries(checks).filter(([, ok]) => !ok);
   for (const [name, ok] of Object.entries(checks)) {
     console.log(`${ok ? "PASS" : "FAIL"}  ${name}`);
