@@ -38,7 +38,11 @@ try {
       "ML-backed APIs &amp; app features",
     ].every((title) => html.includes(title)),
     "process strip rendered": has("How we'd work together"),
-    "faq answers rendered": has("Are you available for freelance work?"),
+    "faq answers rendered": has("Are you open to new roles or freelance work?"),
+    "hero states full-time and freelance availability": has("Open to full-time AI/ML &amp; full-stack roles"),
+    "public repos show a Code link": ["personalized-audio-recommender", "kisanshield-fl", "Space_Launch_Analysis", "vayu-aqi"]
+      .every((repo) => html.includes(`href="https://github.com/Pranaw108/${repo}"`)),
+    "client SaaS stays anonymised": !/SVS|EduTech/i.test(html),
     "faq states what he does not do": has("What do you not do?"),
     "form submit button rendered": html.includes("Send message"),
     "form has honeypot": html.includes('name="company"'),
