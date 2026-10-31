@@ -37,7 +37,7 @@ All copy lives in `src/data/` — components only render it.
 |---|---|
 | `profile.js` | Name, roles, intro, contact links, about text, education |
 | `sections.js` | Section order, numbering and which appear in the nav — one source for all three |
-| `services.js` | The four services and the "how we'd work together" steps |
+| `services.js` | The five services and the "how we'd work together" steps |
 | `faqs.js` | Client FAQ, including what I don't take on |
 | `experience.js` | Jobs and internships (newest first) |
 | `projects.js` | Case studies: summary, problem, role, results, approach, features, gallery |
@@ -51,8 +51,8 @@ Project images live in `public/images/` as WebP.
 
 ```
 src/
-  sections/    home page sections, in order: Hero, Services, Work, Experience,
-               About, Skills, Credentials, Faq, StartProject, Contact
+  sections/    home page sections, in order: Hero, Proof, Work, Services, AskMe,
+               Experience, About, Skills, Credentials, Faq, StartProject, Contact
   api/         Vercel serverless functions (inquiry form)
   scripts/     render + API smoke tests, run by `npm run check`
   pages/       Home, CaseStudy (/work/:slug, lazy-loaded), NotFound
