@@ -1,0 +1,271 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Pranaw Gautam — Résumé</title>
+    <meta name="author" content="Pranaw Gautam" />
+    <!--
+      Source of public/files/Pranaw-Gautam-Resume.pdf. Edit here, then run
+      `node resume/build-pdf.mjs` (see that file). Single column, real text and
+      standard headings so applicant-tracking systems can parse it.
+    -->
+    <style>
+      @page {
+        size: A4;
+        margin: 14mm 15mm 14mm 15mm;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+        font-size: 9.6pt;
+        line-height: 1.38;
+        color: #1a1a1a;
+      }
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+      h1 {
+        margin: 0;
+        font-size: 20pt;
+        letter-spacing: 0.04em;
+      }
+      .headline {
+        margin: 2pt 0 4pt;
+        font-size: 10.5pt;
+        font-weight: bold;
+        color: #8a3209;
+      }
+      .contact {
+        margin: 0;
+        font-size: 9pt;
+        color: #333;
+      }
+      h2 {
+        margin: 11pt 0 4pt;
+        padding-bottom: 2pt;
+        border-bottom: 1px solid #b9b4a8;
+        font-size: 10.5pt;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: #8a3209;
+        break-after: avoid;
+      }
+      h3 {
+        margin: 7pt 0 1pt;
+        font-size: 10pt;
+        display: flex;
+        justify-content: space-between;
+        gap: 12pt;
+        break-after: avoid;
+      }
+      h3 .when {
+        font-weight: normal;
+        white-space: nowrap;
+        color: #333;
+      }
+      h4 {
+        margin: 5pt 0 1pt;
+        font-size: 9.6pt;
+        font-style: italic;
+        font-weight: bold;
+        color: #333;
+        break-after: avoid;
+      }
+      p {
+        margin: 2pt 0;
+      }
+      ul {
+        margin: 2pt 0 0;
+        padding-left: 13pt;
+      }
+      li {
+        margin: 1.5pt 0;
+        break-inside: avoid;
+      }
+      .skills p {
+        margin: 1.5pt 0;
+      }
+      .entry {
+        break-inside: avoid;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>PRANAW GAUTAM</h1>
+      <p class="headline">AI/ML Engineer | Full-stack Developer | Python, TypeScript &amp; Flutter</p>
+      <p class="contact">
+        Indore, Madhya Pradesh, India | +91 81092 60602 |
+        <a href="mailto:pranawgautam@gmail.com">pranawgautam@gmail.com</a>
+      </p>
+      <p class="contact">
+        <a href="https://www.linkedin.com/in/pranaw-gautam/">linkedin.com/in/pranaw-gautam</a> |
+        <a href="https://github.com/Pranaw108">github.com/Pranaw108</a> | Portfolio:
+        <a href="https://my-portfolio-two-gilt-97.vercel.app/">my-portfolio-two-gilt-97.vercel.app</a>
+      </p>
+    </header>
+
+    <h2>Summary</h2>
+    <p>
+      AI/ML Engineer at Vibe6 Digital. Built the recommendation system for a client's audio-storytelling app, from raw
+      event data and offline evaluation to an on-device Flutter prototype, and now ships full-stack features on a
+      multi-tenant school-management SaaS (NestJS, Next.js, PostgreSQL with row-level security): online payments,
+      assessment and data tooling. Proves results on held-out data, and proves tests can fail before trusting them.
+      MCA, GPA 8.65/10. Open to full-time AI/ML and full-stack roles.
+    </p>
+
+    <h2>Technical Skills</h2>
+    <div class="skills">
+      <p>
+        <b>Machine Learning:</b> scikit-learn, recommender systems, collaborative filtering, content-based filtering,
+        feature engineering, model evaluation (NDCG, precision/recall)
+      </p>
+      <p>
+        <b>Data:</b> Python, pandas, NumPy, SQL, EDA, statistical analysis, ETL pipelines, SQLAlchemy, Matplotlib, Seaborn
+      </p>
+      <p><b>Apps &amp; APIs:</b> TypeScript, NestJS, Next.js, React, FastAPI, REST APIs, zod, Flutter, Dart</p>
+      <p><b>BI &amp; Databases:</b> Power BI (DAX), PostgreSQL (row-level security), Drizzle ORM, MySQL, Redis</p>
+      <p><b>Tools &amp; Cloud:</b> Git, GitHub Actions, pytest, Vitest, Playwright, Docker, BullMQ, AWS (EC2, S3)</p>
+    </div>
+
+    <h2>Experience</h2>
+    <h3><span>AI/ML Engineer | Vibe6 Digital LLP, Indore</span><span class="when">Aug 2026 – Present</span></h3>
+
+    <h4>Multi-tenant school-management SaaS (NestJS/Fastify, Next.js, PostgreSQL with forced row-level security)</h4>
+    <ul>
+      <li>
+        Top contributor to main in the first four weeks (251 of 582 commits): fees and payments, an integrations hub,
+        transport tracking, attendance, exam marking and role dashboards.
+      </li>
+      <li>
+        Shipped online fee payments through four gateways (Razorpay, Cashfree, PayU, Stripe), each school on its own
+        account, with part payments and platform-admin control of which gateways schools may use; proved Cashfree and
+        PayU end to end on their real sandboxes.
+      </li>
+      <li>
+        Built assessment from exam defaults to results: papers for chosen students under one candidate rule reused by
+        admit cards, marks, online tests, OMR and results; re-evaluation requests with a moderators' queue and
+        notifications; teacher remarks; per-question difficulty from real results; marking schemes and question-bank
+        tags.
+      </li>
+      <li>
+        Added an optional, consent-first webcam identity check for online tests: direct uploads to private object storage
+        through size-signed links, server-side JPEG verification, access limited to exam managers and automatic deletion
+        after a retention period.
+      </li>
+      <li>
+        Scaled student import from 2,000 to 20,000 rows with a staged, chunked, all-or-nothing import; wrote a
+        dependency-free .xlsx export writer; secured the OMR recogniser with a shared secret.
+      </li>
+      <li>
+        Built an integrations hub where each school connects its own payment gateway, GPS provider, APIs and signed
+        webhooks, with encrypted credentials and outbound calls guarded against internal addresses.
+      </li>
+      <li>
+        Tested against real PostgreSQL and object storage, broke each guard on purpose to prove its test fails (mutation
+        testing), and added cross-tenant isolation checks for every new table.
+      </li>
+    </ul>
+
+    <h4>Recommendation system for a client's audio-storytelling app (Python, scikit-learn, Flutter)</h4>
+    <ul>
+      <li>
+        Built the recommendation pipeline in Python (pandas, scikit-learn): cleaned a raw Firestore export, engineered
+        user-title features and set up leakage-free, time-based splits.
+      </li>
+      <li>
+        Benchmarked 8 approaches (popularity, TF-IDF content-based, item-item collaborative filtering, hybrid); weighted
+        popularity beat heavier models on sparse data (NDCG@10 0.456 vs 0.419), steering the design to simpler ranking.
+      </li>
+      <li>
+        Designed a shelf-based home screen that reached 87.4% of held-out users with a title they went on to play, vs
+        82.6% for a single list of equal length (McNemar p = 0.0018).
+      </li>
+      <li>Trained a logistic-regression ranker that lifted top-10 hit rate from 77.9% to 80.1% (562 users, p = 0.02).</li>
+      <li>
+        Caught an 18+ title being recommended to 99% of users who had not confirmed their age; enforced age gating in the
+        ranking and shelf logic, cutting that to zero.
+      </li>
+      <li>
+        Built the Flutter prototype that ranks titles on-device from exported model weights and explains every card;
+        parity tests keep the Dart engine identical to the Python reference.
+      </li>
+    </ul>
+
+    <div class="entry">
+      <h3><span>Data Science Intern | Shanti Infosoft LLP</span><span class="when">Jan 2026 – Jun 2026</span></h3>
+      <ul>
+        <li>Built reusable preprocessing pipelines in Python (pandas, NumPy) as modular cleaning and transformation components.</li>
+        <li>Ran exploratory data analysis to surface patterns and data-quality issues; presented findings with Matplotlib and Seaborn.</li>
+        <li>Debugged and optimized pipeline scripts for reliability; took part in code reviews, updates and testing.</li>
+      </ul>
+    </div>
+
+    <h2>Projects</h2>
+    <div class="entry">
+      <h3>
+        <span>Personalized Audio Recommender | Python, scikit-learn, FastAPI, pytest</span>
+        <span class="when">2026 · Open source</span>
+      </h3>
+      <ul>
+        <li>
+          Open-source recommender on synthetic data: 7 models behind one interface, an explainable shelf home screen, a
+          FastAPI service and demo, 79 tests with CI; tuned hybrid NDCG@10 0.177 vs 0.160 for popularity.
+        </li>
+      </ul>
+    </div>
+    <div class="entry">
+      <h3>
+        <span>Vayu — Air Quality Forecasting | Python, DuckDB, LightGBM, FastAPI, React</span>
+        <span class="when">2026 · Open source</span>
+      </h3>
+      <ul>
+        <li>
+          Normalised 71.9M CPCB station readings from 546 files and 113 header layouts into partitioned Parquet queried
+          with DuckDB; implemented the official CPCB AQI and quarantined 22 stations whose weather sensors disagreed with
+          reanalysis.
+        </li>
+        <li>
+          6-hour PM2.5 forecast with 35% lower error than persistence (MAE 41.4 vs 63.7 µg/m³) across 3 rolling-origin
+          folds, detecting 66.5% of pollution-episode onsets.
+        </li>
+      </ul>
+    </div>
+    <div class="entry">
+      <h3><span>Space Launch Analytics | Python, MySQL, SQLAlchemy, Power BI</span><span class="when">2026</span></h3>
+      <ul>
+        <li>
+          Python ETL that validates and loads launch, rocket and ISRO data into a 4-table MySQL warehouse with engineered
+          KPIs such as cost per kg and payload utilization.
+        </li>
+        <li>
+          6-page Power BI report with DAX on 7,500 launches since 1957: 83.05% success rate, 35 launch sites, 26
+          operators, cost trends and an ISRO deep-dive.
+        </li>
+      </ul>
+    </div>
+
+    <h2>Education</h2>
+    <div class="entry">
+      <h3>
+        <span>Master of Computer Applications (MCA) | AKS University, Satna | GPA 8.65/10</span>
+        <span class="when">2024 – 2026</span>
+      </h3>
+      <h3><span>Bachelor of Computer Applications (BCA) | APS University, Rewa</span><span class="when">2015 – 2018</span></h3>
+    </div>
+
+    <h2>Certifications &amp; Achievements</h2>
+    <ul>
+      <li>
+        National Finalist (Top 10), GOER 2025 – Institute of Risk Management (India Affiliate) | RMAT score: 96%
+        (240/250), 2025
+      </li>
+      <li>Advanced Program on Amazon Web Services (332 hours, Grade A1) – Anudip Foundation, supported by Accenture, 2025</li>
+      <li>Data Science Bootcamp – GeeksforGeeks | Data Science Internship Certificate – Shanti Infosoft LLP, 2026</li>
+    </ul>
+  </body>
+</html>
