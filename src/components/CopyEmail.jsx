@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { Check, Copy } from "lucide-react";
 
+/** Icon button that copies the address; the label is announced when it flips to "Copied". */
 export default function CopyEmail({ email, className = "" }) {
   const [copied, setCopied] = useState(false);
   const timer = useRef(0);
@@ -23,12 +24,14 @@ export default function CopyEmail({ email, className = "" }) {
     <button
       type="button"
       onClick={copy}
-      className={`inline-flex h-9 items-center gap-1.5 rounded-full border px-3.5 text-sm transition-colors duration-300 ${
-        copied ? "border-accent-bright/50 text-accent-bright" : "border-white/15 text-[#c9c4b8] hover:border-white/40 hover:text-white"
+      className={`grid size-10 place-items-center rounded-full border transition-colors duration-300 ${
+        copied ? "border-emerald-500/50 text-emerald-600 dark:text-emerald-400" : "border-line bg-surface text-muted hover:border-line-strong hover:text-ink"
       } ${className}`}
     >
-      {copied ? <Check className="size-4" aria-hidden="true" /> : <Copy className="size-3.5" aria-hidden="true" />}
-      <span aria-live="polite">{copied ? "Copied" : "Copy email"}</span>
+      {copied ? <Check className="size-4" aria-hidden="true" /> : <Copy className="size-4" aria-hidden="true" />}
+      <span className="sr-only" aria-live="polite">
+        {copied ? "Email address copied" : "Copy email address"}
+      </span>
     </button>
   );
 }

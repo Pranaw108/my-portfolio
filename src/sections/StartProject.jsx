@@ -193,10 +193,6 @@ export default function StartProject() {
           myself and reply within a couple of days.
         </SectionHeading>
 
-        <Reveal className="mt-10 md:mt-12">
-          <QuickContact />
-        </Reveal>
-
         <Reveal className="mx-auto mt-10 max-w-3xl md:mt-12">
           <div className="card overflow-hidden shadow-soft">
             {/* Terminal chrome: this is the one piece of styling borrowed from the
@@ -352,12 +348,6 @@ export default function StartProject() {
                       </>
                     )}
                   </Button>
-                  <p className="text-sm text-muted">
-                    Or email me at{" "}
-                    <a href={`mailto:${profile.email}`} className="text-ink underline decoration-line-strong underline-offset-4 hover:decoration-accent">
-                      {profile.email}
-                    </a>
-                  </p>
                 </div>
 
                 {status === "error" && (
@@ -384,6 +374,11 @@ export default function StartProject() {
             )}
             </div>
           </div>
+        </Reveal>
+
+        {/* The single row of direct routes, under the primary path (the form). */}
+        <Reveal className="mt-10 md:mt-12">
+          <QuickContact />
         </Reveal>
       </div>
     </section>

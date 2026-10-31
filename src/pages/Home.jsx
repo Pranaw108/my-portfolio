@@ -9,7 +9,6 @@ import Skills from "../sections/Skills";
 import Credentials from "../sections/Credentials";
 import Faq from "../sections/Faq";
 import StartProject from "../sections/StartProject";
-import ContactPanel from "../sections/Contact";
 
 /**
  * Order follows what a visitor needs to decide: the work itself first (recruiters
@@ -30,7 +29,6 @@ export default function Home() {
       <Credentials />
       <Faq />
       <StartProject />
-      <ContactPanel />
     </>
   );
 }
