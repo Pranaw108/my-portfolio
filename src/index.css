@@ -23,6 +23,14 @@
      pass the contrast and colour-blindness checks against --surface. */
   --chart-1: #c4400f;
   --chart-2: #0e6e9c;
+  /* Category tones for the toolkit, kept clear of the brand orange.
+     Each passes 4.5:1 as text on --surface in its theme. */
+  --tone-violet: #6941c6;
+  --tone-teal: #0f766e;
+  --tone-blue: #1d5fd6;
+  --tone-rose: #be185d;
+  --tone-green: #15803d;
+  --tone-slate: #4b5563;
   color-scheme: light;
 }
 
@@ -41,6 +49,12 @@
   --shadow-color: 0 0 0;
   --chart-1: #e0603a;
   --chart-2: #1f8fb5;
+  --tone-violet: #b39cff;
+  --tone-teal: #4fd1c5;
+  --tone-blue: #85adff;
+  --tone-rose: #f58fc0;
+  --tone-green: #6fd896;
+  --tone-slate: #aeb8c6;
   color-scheme: dark;
 }
 
@@ -151,6 +165,23 @@
     box-shadow:
       0 1px 2px rgb(var(--shadow-color) / 0.04),
       0 12px 32px -12px rgb(var(--shadow-color) / 0.12);
+  }
+
+  /* A tinted chip / card in one category tone; set --tone on the element or a parent. */
+  .tone-chip {
+    border: 1px solid color-mix(in oklab, var(--tone) 28%, var(--line));
+    background: color-mix(in oklab, var(--tone) 9%, var(--surface));
+    /* `translate`, not `transform`: framer-motion owns the inline transform. */
+    transition:
+      translate 0.25s var(--ease-out-expo),
+      border-color 0.25s,
+      box-shadow 0.25s;
+  }
+
+  .tone-chip:hover {
+    translate: 0 -2px;
+    border-color: color-mix(in oklab, var(--tone) 70%, transparent);
+    box-shadow: 0 6px 18px -8px color-mix(in oklab, var(--tone) 55%, transparent);
   }
 
   .shadow-lift {

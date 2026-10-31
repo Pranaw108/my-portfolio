@@ -13,11 +13,12 @@ const variants = {
  * The delay follows the column, so a row builds left to right and each card on
  * a phone animates as it arrives rather than all at once off-screen.
  */
-export default function BentoItem({ as = "div", index = 0, columns = 3, className = "", children }) {
+export default function BentoItem({ as = "div", index = 0, columns = 3, className = "", children, ...props }) {
   const reduce = useReducedMotion();
   const Component = m[as];
   return (
     <Component
+      {...props}
       className={className}
       variants={variants}
       initial={reduce ? false : "before"}
