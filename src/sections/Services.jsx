@@ -2,7 +2,9 @@ import { ArrowRight, BarChart3, Boxes, Building2, Check, Database, Plus, Sparkle
 import { Link } from "react-router-dom";
 import { processSteps, services } from "../data/services";
 import { sectionIndex } from "../data/sections";
-import Reveal from "../components/Reveal";
+import { m, useReducedMotion } from "framer-motion";
+import BentoItem from "../components/BentoItem";
+import { EASE } from "../lib/motion";
 import SectionHeading from "../components/SectionHeading";
 import Tag from "../components/Tag";
 import { countWord } from "../lib/words";
@@ -85,6 +87,46 @@ function ServiceCard({ service }) {
   );
 }
 
+/** The four engagement steps. The rail draws itself downward and the steps follow it in turn. */
+function ProcessTimeline() {
+  const reduce = useReducedMotion();
+  const steps = {
+    // Steps rest readable; only the offset and a light fade are animated.
+    hidden: { opacity: 0.5, x: -8 },
+    shown: { opacity: 1, x: 0, transition: { duration: 0.45, ease: EASE } },
+  };
+
+  return (
+    <div className="flex h-full flex-col rounded-3xl border border-dashed border-line-strong bg-bg-soft p-6 sm:p-7">
+      <h3 className="eyebrow">How we'd work together</h3>
+      <m.ol
+        className="relative mt-6 space-y-5"
+        initial={reduce ? false : "hidden"}
+        whileInView="shown"
+        viewport={{ once: true, margin: "0px 0px -12% 0px" }}
+        variants={{ hidden: {}, shown: { transition: { staggerChildren: 0.14, delayChildren: 0.1 } } }}
+      >
+        <m.span
+          aria-hidden="true"
+          className="absolute top-2 bottom-2 left-[0.9rem] w-px origin-top bg-line-strong"
+          variants={{ hidden: { scaleY: 0 }, shown: { scaleY: 1, transition: { duration: 0.7, ease: EASE } } }}
+        />
+        {processSteps.map((step, i) => (
+          <m.li key={step.title} variants={steps} className="relative grid grid-cols-[1.8rem_minmax(0,1fr)] gap-x-3">
+            <span className="relative grid size-7 place-items-center rounded-full border border-line-strong bg-surface font-mono text-[0.68rem] font-medium text-accent tabular">
+              {String(i + 1).padStart(2, "0")}
+            </span>
+            <div>
+              <h4 className="font-semibold tracking-[-0.015em]">{step.title}</h4>
+              <p className="mt-1 text-[0.9rem] leading-relaxed text-muted text-pretty">{step.body}</p>
+            </div>
+          </m.li>
+        ))}
+      </m.ol>
+    </div>
+  );
+}
+
 export default function Services() {
   return (
     <section id="services" aria-labelledby="services-title" className="py-24 md:py-32">
@@ -101,30 +143,15 @@ export default function Services() {
 
         <div className="mt-12 grid grid-cols-1 gap-5 md:mt-14 md:grid-cols-2 lg:grid-cols-3">
           {services.map((service, i) => (
-            <Reveal key={service.id} delay={i * 0.06} className="min-w-0">
+            <BentoItem key={service.id} index={i} className="min-w-0">
               <ServiceCard service={service} />
-            </Reveal>
+            </BentoItem>
           ))}
 
           {/* How an engagement runs — fills the grid's last cell instead of a separate strip. */}
-          <Reveal delay={services.length * 0.06} className="min-w-0">
-            <div className="flex h-full flex-col rounded-3xl border border-dashed border-line-strong bg-bg-soft p-6 sm:p-7">
-              <h3 className="eyebrow">How we'd work together</h3>
-              <ol className="relative mt-6 space-y-5 before:absolute before:top-2 before:bottom-2 before:left-[0.9rem] before:w-px before:bg-line-strong">
-                {processSteps.map((step, i) => (
-                  <li key={step.title} className="relative grid grid-cols-[1.8rem_minmax(0,1fr)] gap-x-3">
-                    <span className="relative grid size-7 place-items-center rounded-full border border-line-strong bg-surface font-mono text-[0.68rem] font-medium text-accent tabular">
-                      {String(i + 1).padStart(2, "0")}
-                    </span>
-                    <div>
-                      <h4 className="font-semibold tracking-[-0.015em]">{step.title}</h4>
-                      <p className="mt-1 text-[0.9rem] leading-relaxed text-muted text-pretty">{step.body}</p>
-                    </div>
-                  </li>
-                ))}
-              </ol>
-            </div>
-          </Reveal>
+          <BentoItem index={services.length} className="min-w-0">
+            <ProcessTimeline />
+          </BentoItem>
         </div>
       </div>
     </section>
