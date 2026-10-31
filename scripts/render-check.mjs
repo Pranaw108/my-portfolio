@@ -43,6 +43,9 @@ try {
     "public repos show a Code link": ["personalized-audio-recommender", "kisanshield-fl", "Space_Launch_Analysis", "vayu-aqi"]
       .every((repo) => html.includes(`href="https://github.com/Pranaw108/${repo}"`)),
     "client SaaS stays anonymised": !/SVS|EduTech/i.test(html),
+    // Motion must never be the only way to read content.
+    "role rotator gives screen readers the full phrase": html.includes('<span class="sr-only">AI/ML Engineer and Full-stack Developer</span>'),
+    "stats render their real values before any count-up": html.includes(">251<") && /71\.9(<!-- -->)?M/.test(html),
     "faq states what he does not do": has("What do you not do?"),
     "form submit button rendered": html.includes("Send message"),
     "form has honeypot": html.includes('name="company"'),
